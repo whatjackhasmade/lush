@@ -1,0 +1,34 @@
+# import Product from './fragments.graphql';
+
+query products(
+	$after: String
+	$before: String
+	$channel: String
+	$filter: ProductFilterInput
+	$first: Int!
+	$last: Int
+	$sortBy: ProductOrder
+	$language: LanguageCodeEnum!
+) {
+	products(
+		after: $after
+		before: $before
+		channel: $channel
+		filter: $filter
+		first: $first
+		last: $last
+		sortBy: $sortBy
+	) {
+		edges {
+			node {
+				...Product
+			}
+		}
+	}
+}
+
+query product($channel: String, $slug: String!, $language: LanguageCodeEnum!) {
+	product(channel: $channel, slug: $slug) {
+		...Product
+	}
+}

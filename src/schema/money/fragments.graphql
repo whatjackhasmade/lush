@@ -1,0 +1,26 @@
+fragment Money on Money {
+	amount
+	currency
+}
+
+fragment TaxedMoney on TaxedMoney {
+	currency
+	gross {
+		...Money
+	}
+	net {
+		...Money
+	}
+	tax {
+		...Money
+	}
+}
+
+fragment TaxedMoneyRange on TaxedMoneyRange {
+	start {
+		...TaxedMoney
+	}
+	stop {
+		...TaxedMoney
+	}
+}

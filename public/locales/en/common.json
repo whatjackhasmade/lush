@@ -1,0 +1,8 @@
+{
+	"addToCart": "Add to cart for {{price}}",
+	"addAnotherToCart": "Add another for {{price}}",
+	"language": {
+		"en": "English",
+		"fr": "Français"
+	}
+}

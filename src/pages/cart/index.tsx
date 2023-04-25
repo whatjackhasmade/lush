@@ -1,13 +1,13 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Metadata, Products } from "lush/components";
+import { CartOverview, Metadata } from "lush/components";
 import { GetServerSideProps } from "next";
 import { Translation } from "lush/enums";
 
-export default function HomePage() {
+export default function CartPage() {
 	return (
 		<>
-			<Metadata title="Home" />
-			<Products />
+			<Metadata title="Products" />
+			<CartOverview />
 		</>
 	);
 }

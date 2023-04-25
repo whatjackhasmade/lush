@@ -1,0 +1,71 @@
+fragment Product on Product {
+	availableForPurchaseAt
+	id
+	seoTitle
+	seoDescription
+	name
+	description
+	metadata {
+		key
+		value
+	}
+	productType {
+		id
+		slug
+	}
+	slug
+	category {
+		id
+	}
+	created
+	updatedAt
+	weight {
+		unit
+		value
+	}
+	defaultVariant {
+		id
+	}
+	rating
+	channel
+	thumbnail(size: 256, format: WEBP) {
+		url
+		alt
+	}
+	isAvailableForPurchase
+	availableForPurchaseAt
+	pricing {
+		onSale
+		discount {
+			...TaxedMoney
+		}
+		discountLocalCurrency {
+			...TaxedMoney
+		}
+		priceRange {
+			...TaxedMoneyRange
+		}
+		priceRangeUndiscounted {
+			...TaxedMoneyRange
+		}
+	}
+	media {
+		id
+		sortOrder
+		alt
+		type
+		oembedData
+		url
+	}
+	translation(languageCode: $language) {
+		id
+		language {
+			code
+			language
+		}
+		seoTitle
+		seoDescription
+		name
+		description
+	}
+}

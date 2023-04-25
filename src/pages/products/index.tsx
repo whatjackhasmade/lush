@@ -3,10 +3,10 @@ import { Metadata, Products } from "lush/components";
 import { GetServerSideProps } from "next";
 import { Translation } from "lush/enums";
 
-export default function HomePage() {
+export default function ProductsPage() {
 	return (
 		<>
-			<Metadata title="Home" />
+			<Metadata title="Products" />
 			<Products />
 		</>
 	);

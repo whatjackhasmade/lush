@@ -1,3 +1,22 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": "next/core-web-vitals",
+  "ignorePatterns": [
+    ".next/",
+    "node_modules/",
+    "out/",
+    "src/schema/index.ts"
+  ],
+  "overrides": [
+   {
+  "files": ["*.graphql"],
+  "parser": "@graphql-eslint/eslint-plugin",
+  "plugins": ["@graphql-eslint"],
+  "rules": {
+    "@graphql-eslint/unique-operation-name": "error"
+  },
+  "parserOptions": {
+    "operations": "./src/**/*.graphql"
+      }
+    }
+  ]
 }
