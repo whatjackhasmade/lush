@@ -1,0 +1,17 @@
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	font-family: var(--font-inter);
+}
+
+body {
+	overflow-y: scroll;
+}
+
+img {
+	max-width: 100%;
+}

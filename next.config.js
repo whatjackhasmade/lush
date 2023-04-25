@@ -10,6 +10,15 @@ const nextConfig = {
     domains: ['unicorn-staging.eu.saleor.cloud'],
   },
   reactStrictMode: true,
+  async redirects() {
+    return [
+      {
+        source: '/products',
+        destination: '/',
+        permanent: true,
+      },
+    ]
+  },
   swcMinify: true,
 }
 

@@ -1,5 +1,5 @@
 export enum Pathname {
 	Index = "/",
-	Products = "/products",
+	Cart = "/cart",
 	Product = "/products/[slug]",
 }

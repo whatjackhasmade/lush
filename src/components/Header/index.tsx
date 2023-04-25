@@ -17,9 +17,9 @@ export const Header: React.FC = () => {
 			},
 		},
 		{
-			title: t("navigation.products"),
+			title: t("navigation.cart"),
 			href: {
-				pathname: Pathname.Products,
+				pathname: Pathname.Cart,
 			},
 		},
 	];

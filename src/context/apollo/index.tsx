@@ -1,9 +1,16 @@
 import { ApolloProvider as Provider } from "@apollo/client";
 import { FC, PropsWithChildren } from "react";
 
-import { getApolloClient } from "../../clients/apollo";
+import { useApollo } from "../../clients/apollo";
 
-export const ApolloProvider: FC<PropsWithChildren> = ({ children }) => {
-	const client = getApolloClient();
+interface ApolloProviderProps {
+	pageProps: any;
+}
+
+export const ApolloProvider: FC<PropsWithChildren<ApolloProviderProps>> = ({
+	children,
+	pageProps,
+}) => {
+	const client = useApollo(pageProps);
 	return <Provider client={client}>{children}</Provider>;
 };
