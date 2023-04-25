@@ -1,13 +1,17 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { Metadata, Products } from "lush/components";
+import { Filters, Metadata, Products } from "lush/components";
 import { GetServerSideProps } from "next";
 import { Translation } from "lush/enums";
+import { FiltersProvider } from "lush/context";
 
 export default function HomePage() {
 	return (
 		<>
 			<Metadata title="Home" />
-			<Products />
+			<FiltersProvider>
+				<Filters />
+				<Products />
+			</FiltersProvider>
 		</>
 	);
 }
