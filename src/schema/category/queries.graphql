@@ -1,0 +1,25 @@
+# import Category from './fragments.graphql';
+
+query Categories(
+	$after: String
+	$before: String
+	$filter: CategoryFilterInput
+	$first: Int!
+	$last: Int
+	$level: Int
+) {
+	categories(
+		after: $after
+		before: $before
+		filter: $filter
+		first: $first
+		last: $last
+		level: $level
+	) {
+		edges {
+			node {
+				...Category
+			}
+		}
+	}
+}

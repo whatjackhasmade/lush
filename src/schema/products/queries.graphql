@@ -1,6 +1,6 @@
 # import Product from './fragments.graphql';
 
-query products(
+query Products(
 	$after: String
 	$before: String
 	$channel: String

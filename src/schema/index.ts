@@ -24604,6 +24604,20 @@ export type _Service = {
   sdl?: Maybe<Scalars['String']>;
 };
 
+export type CategoryFragment = { __typename?: 'Category', id: string, name: string, description?: any | null, slug: string };
+
+export type CategoriesQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  filter?: InputMaybe<CategoryFilterInput>;
+  first: Scalars['Int'];
+  last?: InputMaybe<Scalars['Int']>;
+  level?: InputMaybe<Scalars['Int']>;
+}>;
+
+
+export type CategoriesQuery = { __typename?: 'Query', categories?: { __typename?: 'CategoryCountableConnection', edges: Array<{ __typename?: 'CategoryCountableEdge', node: { __typename?: 'Category', id: string, name: string, description?: any | null, slug: string } }> } | null };
+
 export type MoneyFragment = { __typename?: 'Money', amount: number, currency: string };
 
 export type TaxedMoneyFragment = { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } };
@@ -24635,6 +24649,14 @@ export type ProductQueryVariables = Exact<{
 
 export type ProductQuery = { __typename?: 'Query', product?: { __typename?: 'Product', availableForPurchaseAt?: any | null, id: string, seoTitle?: string | null, seoDescription?: string | null, name: string, description?: any | null, slug: string, created: any, updatedAt: any, rating?: number | null, channel?: string | null, isAvailableForPurchase?: boolean | null, metadata: Array<{ __typename?: 'MetadataItem', key: string, value: string }>, productType: { __typename?: 'ProductType', id: string, slug: string }, category?: { __typename?: 'Category', id: string } | null, weight?: { __typename?: 'Weight', unit: WeightUnitsEnum, value: number } | null, defaultVariant?: { __typename?: 'ProductVariant', id: string } | null, thumbnail?: { __typename?: 'Image', url: string, alt?: string | null } | null, pricing?: { __typename?: 'ProductPricingInfo', onSale?: boolean | null, discount?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } } | null, discountLocalCurrency?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } } | null, priceRange?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } } | null, stop?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } } | null } | null, priceRangeUndiscounted?: { __typename?: 'TaxedMoneyRange', start?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } } | null, stop?: { __typename?: 'TaxedMoney', currency: string, gross: { __typename?: 'Money', amount: number, currency: string }, net: { __typename?: 'Money', amount: number, currency: string }, tax: { __typename?: 'Money', amount: number, currency: string } } | null } | null } | null, media?: Array<{ __typename?: 'ProductMedia', id: string, sortOrder?: number | null, alt: string, type: ProductMediaType, oembedData: any, url: string }> | null, translation?: { __typename?: 'ProductTranslation', id: string, seoTitle?: string | null, seoDescription?: string | null, name?: string | null, description?: any | null, language: { __typename?: 'LanguageDisplay', code: LanguageCodeEnum, language: string } } | null } | null };
 
+export const CategoryFragmentDoc = gql`
+    fragment Category on Category {
+  id
+  name
+  description
+  slug
+}
+    `;
 export const MoneyFragmentDoc = gql`
     fragment Money on Money {
   amount
@@ -24739,8 +24761,59 @@ export const ProductFragmentDoc = gql`
 }
     ${TaxedMoneyFragmentDoc}
 ${TaxedMoneyRangeFragmentDoc}`;
+export const CategoriesDocument = gql`
+    query Categories($after: String, $before: String, $filter: CategoryFilterInput, $first: Int!, $last: Int, $level: Int) {
+  categories(
+    after: $after
+    before: $before
+    filter: $filter
+    first: $first
+    last: $last
+    level: $level
+  ) {
+    edges {
+      node {
+        ...Category
+      }
+    }
+  }
+}
+    ${CategoryFragmentDoc}`;
+
+/**
+ * __useCategoriesQuery__
+ *
+ * To run a query within a React component, call `useCategoriesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCategoriesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCategoriesQuery({
+ *   variables: {
+ *      after: // value for 'after'
+ *      before: // value for 'before'
+ *      filter: // value for 'filter'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      level: // value for 'level'
+ *   },
+ * });
+ */
+export function useCategoriesQuery(baseOptions: Apollo.QueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+      }
+export function useCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CategoriesQuery, CategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CategoriesQuery, CategoriesQueryVariables>(CategoriesDocument, options);
+        }
+export type CategoriesQueryHookResult = ReturnType<typeof useCategoriesQuery>;
+export type CategoriesLazyQueryHookResult = ReturnType<typeof useCategoriesLazyQuery>;
+export type CategoriesQueryResult = Apollo.QueryResult<CategoriesQuery, CategoriesQueryVariables>;
 export const ProductsDocument = gql`
-    query products($after: String, $before: String, $channel: String, $filter: ProductFilterInput, $first: Int!, $last: Int, $sortBy: ProductOrder, $language: LanguageCodeEnum!) {
+    query Products($after: String, $before: String, $channel: String, $filter: ProductFilterInput, $first: Int!, $last: Int, $sortBy: ProductOrder, $language: LanguageCodeEnum!) {
   products(
     after: $after
     before: $before
