@@ -6,7 +6,7 @@ import {
 	NormalizedCacheObject,
 	from,
 } from "@apollo/client";
-import { deepMerge, isEqual } from "lush/utils";
+import { deepMerge } from "lush/utils";
 import { GraphQL } from "lush/enums/graphql";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
@@ -37,15 +37,7 @@ export function initializeApollo(initialState: any = null) {
 		const existingCache = client.extract();
 
 		// Merge the initialState from getStaticProps/getServerSideProps in the existing cache
-		const data = deepMerge(existingCache, initialState, {
-			// combine arrays using object equality (like in sets)
-			arrayMerge: (destinationArray, sourceArray) => [
-				...sourceArray,
-				...destinationArray.filter((d) =>
-					sourceArray.every((s) => !isEqual(d, s))
-				),
-			],
-		});
+		const data = deepMerge(existingCache, initialState);
 
 		// Restore the cache with the merged data
 		client.cache.restore(data);
@@ -56,14 +48,6 @@ export function initializeApollo(initialState: any = null) {
 	if (!apolloClient) apolloClient = client;
 
 	return client;
-}
-
-export function addApolloState(client: TApolloClient, pageProps: any) {
-	if (client && pageProps?.props) {
-		pageProps.props[APOLLO_STATE_PROP_NAME] = client.cache.extract();
-	}
-
-	return pageProps;
 }
 
 export function useApollo(pageProps: any) {

@@ -1,26 +1,35 @@
 export function deepMerge(
-	target: Record<string, any>,
-	source: Record<string, any>
+	target: any[] | Record<string, any>,
+	source: any[] | Record<string, any>
 ) {
-	const isObject = (obj: Record<string, any>) => obj && typeof obj === "object";
-
-	if (!isObject(target) || !isObject(source)) {
-		return source === undefined ? target : source;
+	if (Array.isArray(target) && Array.isArray(source)) {
+		return target.concat(source);
 	}
 
-	const merged = { ...target };
+	if (
+		typeof target === "object" &&
+		typeof source === "object" &&
+		target !== null &&
+		source !== null
+	) {
+		const merged = {};
 
-	Object.keys(source).forEach((key) => {
-		if (isObject(source[key])) {
-			if (!(key in target)) {
-				Object.assign(merged, { [key]: source[key] });
+		for (const key of Object.keys(target)) {
+			if (source.hasOwnProperty(key)) {
+				merged[key] = deepMerge(target[key], source[key]);
 			} else {
-				merged[key] = deepmerge(target[key], source[key]);
+				merged[key] = target[key];
 			}
-		} else {
-			Object.assign(merged, { [key]: source[key] });
 		}
-	});
 
-	return merged;
+		for (const key of Object.keys(source)) {
+			if (!merged.hasOwnProperty(key)) {
+				merged[key] = source[key];
+			}
+		}
+
+		return merged;
+	}
+
+	return source;
 }
