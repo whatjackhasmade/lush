@@ -2,23 +2,36 @@ import { ProductFragment } from "lush/schema";
 import { createContext, FC, PropsWithChildren, useReducer } from "react";
 
 enum CartActionType {
-	ADD = "ADD",
-	REMOVE = "REMOVE",
+	PRODUCT_ADD = "PRODUCT_ADD",
+	PRODUCT_REMOVE = "PRODUCT_REMOVE",
+	PRODUCT_QUANTITY_SET = "PRODUCT_QUANTITY_SET",
 }
 
-interface CartAction {
-	type: CartActionType;
-	payload: ProductFragment;
-}
+type CartAction =
+	| {
+			type: CartActionType.PRODUCT_ADD;
+			payload: ProductFragment;
+	  }
+	| {
+			type: CartActionType.PRODUCT_REMOVE;
+			payload: ProductFragment["id"];
+	  }
+	| {
+			type: CartActionType.PRODUCT_QUANTITY_SET;
+			payload: {
+				productId: ProductFragment["id"];
+				quantity: number;
+			};
+	  };
 
-type CartItem = {
+export interface CartItem {
 	quantity: number;
 	product: ProductFragment;
-};
+}
 
 const cartReducer = (state: CartItem[], action: CartAction) => {
 	switch (action.type) {
-		case CartActionType.ADD:
+		case CartActionType.PRODUCT_ADD: {
 			const existingItem = state.find(
 				(cartItem) => cartItem.product.id === action.payload.id
 			);
@@ -41,50 +54,80 @@ const cartReducer = (state: CartItem[], action: CartAction) => {
 					product: action.payload,
 				},
 			];
-		case CartActionType.REMOVE:
-			return state.filter(
-				(cartItem) => cartItem.product.id !== action.payload.id
-			);
-		default:
+		}
+		case CartActionType.PRODUCT_REMOVE: {
+			return state.filter((cartItem) => cartItem.product.id !== action.payload);
+		}
+		case CartActionType.PRODUCT_QUANTITY_SET: {
+			return state
+				.map((cartItem) =>
+					cartItem.product.id === action.payload.productId
+						? {
+								...cartItem,
+								quantity: action.payload.quantity,
+						  }
+						: cartItem
+				)
+				.filter((cartItem) => cartItem.quantity > 0);
+		}
+		default: {
 			return state;
+		}
 	}
 };
 
 export interface CartContextState {
 	addToCart: (product: ProductFragment) => void;
 	cart: CartItem[];
-	removeFromCart: (product: ProductFragment) => void;
+	count: number;
+	isInCart: (productId: ProductFragment["id"]) => boolean;
+	quantitySet: ({
+		productId,
+		quantity,
+	}: {
+		productId: ProductFragment["id"];
+		quantity: number;
+	}) => void;
+	removeFromCart: (productId: ProductFragment["id"]) => void;
 }
 
 const CartContext = createContext<CartContextState>({
 	addToCart: () => {},
 	cart: [],
+	count: 0,
+	isInCart: () => false,
+	quantitySet: () => {},
 	removeFromCart: () => {},
 });
 
 const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 	const [cart, dispatch] = useReducer(cartReducer, []);
 
-	const addToCart = (product: ProductFragment) => {
-		dispatch({
-			type: CartActionType.ADD,
-			payload: product,
-		});
-	};
-
-	const removeFromCart = (product: ProductFragment) => {
-		dispatch({
-			type: CartActionType.REMOVE,
-			payload: product,
-		});
-	};
-
 	return (
 		<CartContext.Provider
 			value={{
-				addToCart,
+				addToCart: (product) => {
+					dispatch({
+						type: CartActionType.PRODUCT_ADD,
+						payload: product,
+					});
+				},
 				cart,
-				removeFromCart,
+				count: cart.reduce((acc, cartItem) => acc + cartItem.quantity, 0),
+				quantitySet: (payload) => {
+					dispatch({
+						type: CartActionType.PRODUCT_QUANTITY_SET,
+						payload,
+					});
+				},
+				isInCart: (productId) =>
+					cart.some((cartItem) => cartItem.product.id === productId),
+				removeFromCart: (productId) => {
+					dispatch({
+						type: CartActionType.PRODUCT_REMOVE,
+						payload: productId,
+					});
+				},
 			}}
 		>
 			{children}

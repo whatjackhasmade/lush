@@ -1,11 +1,12 @@
 import { CartContext } from "lush/context";
-import { FC, useContext } from "react";
+import { FC, useContext, useRef, useState } from "react";
 
 import * as S from "./styles";
-import Link from "next/link";
 import { Translation } from "lush/enums";
 import { useTranslation } from "next-i18next";
-import { VisuallyHidden } from "../VisuallyHidden";
+import { Text, Title, VisuallyHidden } from "lush/components";
+import useOnClickOutside from "lush/hooks/useOnClickOutside";
+import { CartItem } from "./CartItem";
 
 interface CartProps {}
 
@@ -18,23 +19,54 @@ const IconBag = () => (
 	</svg>
 );
 
-export const Cart: FC<CartProps> = ({}) => {
-	const { cart } = useContext(CartContext);
+export const Cart: FC<CartProps> = () => {
+	const [isOpen, setIsOpen] = useState(false);
+	const { cart, count } = useContext(CartContext);
 	const { t } = useTranslation(Translation.Common);
+	const ref = useRef<HTMLElement>(null);
+
+	useOnClickOutside(ref, () => {
+		if (isOpen) setIsOpen(false);
+	});
 
 	return (
-		<Link href="/cart" legacyBehavior passHref>
-			<S.Cart>
+		<>
+			<S.Toggle
+				aria-checked={isOpen}
+				onClick={(event) => {
+					event.preventDefault();
+					setIsOpen(!isOpen);
+				}}
+				role="switch"
+				type="button"
+			>
 				<IconBag />
 				<VisuallyHidden>{t("cart")}</VisuallyHidden>
-				{!!cart.length && (
-					<S.Count>
-						{cart.reduce((prev, current) => {
-							return prev + current.quantity;
-						}, 0)}
-					</S.Count>
+				{!!count && <S.Count>{count}</S.Count>}
+			</S.Toggle>
+			<S.Cart isOpen={isOpen} ref={ref}>
+				<S.Header>
+					<Title family="inter">Cart ({count})</Title>
+					<S.Close
+						onClick={(event) => {
+							event.preventDefault();
+							setIsOpen(false);
+						}}
+					>
+						X<VisuallyHidden>Close cart</VisuallyHidden>
+					</S.Close>
+				</S.Header>
+				{!count && (
+					<>
+						<Title family="inter">Your bag is empty</Title>
+						<Text>Sounds like a good time to start shopping!</Text>
+					</>
 				)}
+				{cart.map((item) => (
+					<CartItem key={item.product.id} {...item} />
+				))}
 			</S.Cart>
-		</Link>
+			{isOpen && <S.Overlay />}
+		</>
 	);
 };

@@ -1,10 +1,13 @@
 import styled, { css } from "styled-components";
 
-export const Header = styled.div`
-	align-items: center;
-	display: flex;
-	justify-content: space-between;
-`;
+export const Header = styled.div(
+	({ theme }) => css`
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin-bottom: ${theme.space.regular};
+	`
+);
 
 export const Filters = styled.div``;
 

@@ -1,11 +1,11 @@
-import { FC, PropsWithChildren } from "react";
+import { FC } from "react";
 
 import * as S from "./styles";
 import { useFilters } from "lush/hooks/useFilters";
 import { useCategoriesQuery } from "lush/schema";
 import { Skeleton } from "lush/components";
 
-export const Filters: FC<PropsWithChildren> = ({ children }) => {
+export const Filters: FC = () => {
 	const { activeCategories, toggleCategory, clearAllCategories } = useFilters();
 
 	const { data, error, loading } = useCategoriesQuery({

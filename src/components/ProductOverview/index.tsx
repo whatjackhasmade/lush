@@ -5,21 +5,45 @@ import * as S from "./styles";
 import { AddToCart } from "../AddToCart";
 
 interface ProductOverviewProps {
+	loading?: boolean;
 	product: ProductFragment;
 }
 
-export const ProductOverview: FC<ProductOverviewProps> = ({ product }) => {
+const isBlocks = (
+	blocks: unknown
+): blocks is {
+	id: string;
+	data: {
+		text: string;
+	};
+}[] => {
+	if (!Array.isArray(blocks)) return false;
+
+	return blocks.every((block) => {
+		if (typeof block?.id !== "string") return false;
+		if (typeof block?.data?.text !== "string") return false;
+		return true;
+	});
+};
+
+export const ProductOverview: FC<ProductOverviewProps> = ({
+	loading,
+	product,
+}) => {
 	const { description, media } = product;
+	console.log(description);
 	const { blocks } = JSON.parse(description);
+	const parsedBlocks = isBlocks(blocks) ? blocks : [];
+
 	const [featured, ...gallery] = media ?? [];
 
 	return (
 		<div>
 			<S.Header>
 				<div>
-					<S.ImageFeatured src={featured?.url} alt={featured?.alt} />
+					<S.ImageFeatured src={featured?.url} alt={featured?.alt ?? ""} />
 					<h2>{product.name}</h2>
-					<AddToCart product={product} />
+					<AddToCart loading={loading} product={product} />
 				</div>
 				{!!gallery.length && (
 					<S.Gallery>
@@ -31,7 +55,7 @@ export const ProductOverview: FC<ProductOverviewProps> = ({ product }) => {
 					</S.Gallery>
 				)}
 			</S.Header>
-			{blocks?.map((block) => (
+			{parsedBlocks?.map((block) => (
 				<p
 					key={`product-description-${block.id}`}
 					dangerouslySetInnerHTML={{ __html: block.data.text }}

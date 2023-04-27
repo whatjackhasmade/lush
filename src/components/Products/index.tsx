@@ -1,4 +1,4 @@
-import { Error } from "lush/components";
+import { Error, VisuallyHidden } from "lush/components";
 import {
 	LanguageCodeEnum,
 	ProductsQueryVariables,
@@ -38,6 +38,7 @@ export const Products: React.FC<{
 	return (
 		<>
 			{children}
+			{/* TODO: Add skeleton state */}
 			{loading && <p>Loading...</p>}
 			{error && (
 				<Error>
@@ -45,11 +46,16 @@ export const Products: React.FC<{
 				</Error>
 			)}
 			{!!data?.products?.edges?.length && (
-				<S.Products>
-					{data.products.edges.map(({ node }) => (
-						<Product key={`product-listing-item-${node.id}`} {...node} />
-					))}
-				</S.Products>
+				<>
+					<VisuallyHidden>
+						<h2>Products</h2>
+					</VisuallyHidden>
+					<S.Products>
+						{data.products.edges.map(({ node }) => (
+							<Product key={`product-listing-item-${node.id}`} product={node} />
+						))}
+					</S.Products>
+				</>
 			)}
 		</>
 	);

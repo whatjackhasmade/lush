@@ -31,9 +31,8 @@ export default function ProductPage() {
 				title={product?.seoTitle || product?.name || "Product"}
 				description={product?.seoDescription}
 			/>
-			{loading && <p>Loading...</p>}
 			{error && <Error>Sorry, it looks like something went wrong</Error>}
-			{product && <ProductOverview product={product} />}
+			{product && <ProductOverview product={product} loading={loading} />}
 			<pre>{JSON.stringify(data, null, 4)}</pre>
 		</>
 	);

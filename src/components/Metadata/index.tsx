@@ -16,6 +16,7 @@ export const Metadata: FC<MetadataProps> = ({ description, title }) => (
 		<meta content={App.Name} name="apple-mobile-web-app-title" />
 		<meta content="initial-scale=1.0, width=device-width" name="viewport" />
 		<meta content={description ?? App.Description} name="description" />
+		<link href="/favicon.ico" rel="icon" type="image/x-icon" />
 
 		<title>{title ? `${title} | ${App.Name}` : App.Name}</title>
 	</Head>

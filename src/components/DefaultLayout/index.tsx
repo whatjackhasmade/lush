@@ -1,5 +1,5 @@
 import { useTranslation } from "next-i18next";
-import { FC, PropsWithChildren, useContext } from "react";
+import { FC, PropsWithChildren } from "react";
 
 import { Container, Header } from "lush/components";
 import { Translation } from "../../enums";
