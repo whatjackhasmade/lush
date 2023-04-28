@@ -1,9 +1,9 @@
-import { render } from "@testing-library/react";
+import { renderWithTheme } from "../../../.jest/renderWithTheme";
 import { Header } from ".";
 
 describe("Header", () => {
 	it("should render correctly", () => {
-		const { container } = render(<Header />);
+		const { container } = renderWithTheme(<Header />);
 		expect(container).not.toBeEmptyDOMElement();
 	});
 });

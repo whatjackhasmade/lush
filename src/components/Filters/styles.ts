@@ -37,12 +37,12 @@ export const Category = styled.label<{
 	isActive?: boolean;
 	isFull?: boolean;
 }>(
-	({ isActive, isFull }) => css`
+	({ isActive, isFull, theme }) => css`
 		display: inline-block;
 		border: 2px solid transparent;
 		cursor: pointer;
 		border-radius: 50px;
-		padding: 0.5rem 1rem;
+		padding: ${theme.space.xSmall} ${theme.space.regular};
 
 		${isFull &&
 		css`

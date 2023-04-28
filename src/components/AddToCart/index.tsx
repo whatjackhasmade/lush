@@ -1,34 +1,34 @@
-import { CartContext } from "lush/context/cart";
+import { useCart } from "lush/hooks";
 import { Translation } from "lush/enums";
 import { ProductFragment } from "lush/schema";
 import formatCurrency from "lush/utils/formatCurrency";
 import { useTranslation } from "next-i18next";
-import { FC, useContext } from "react";
-import { Skeleton } from "../Skeleton";
-import { Button } from "../Button";
+import { FC } from "react";
+import { Button, Skeleton } from "lush/components";
 
-interface AddToCartProps {
+export interface AddToCartProps {
 	loading?: boolean;
-	product: ProductFragment;
+	product?: ProductFragment;
 }
 
 export const AddToCart: FC<AddToCartProps> = ({ product, loading }) => {
-	const { addToCart, cart } = useContext(CartContext);
+	const { addToCart, cart } = useCart();
 	const { t } = useTranslation(Translation.Common);
 
-	const gross = product.pricing?.priceRangeUndiscounted?.stop?.gross;
+	const gross = product?.pricing?.priceRangeUndiscounted?.stop?.gross;
 
 	return (
 		<Button
+			disabled={loading || !gross?.amount}
 			onClick={() => {
-				addToCart(product);
+				if (product) addToCart(product);
 			}}
 		>
 			{loading ? (
 				<Skeleton />
 			) : (
 				<>
-					{gross?.amount
+					{product && gross?.amount
 						? t(
 								cart.find((cartItem) => cartItem.product.id === product.id)
 									? "addAnotherToCart"

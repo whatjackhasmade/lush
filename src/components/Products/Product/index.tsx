@@ -6,8 +6,7 @@ import { Text, Title } from "lush/components";
 import Image from "next/image";
 import { Pathname } from "lush/enums/pathname";
 import { useRouter } from "next/router";
-import { CartContext } from "lush/context";
-import { useContext } from "react";
+import { useCart } from "lush/hooks";
 
 export const Product: React.FC<{
 	product: ProductFragment;
@@ -15,7 +14,7 @@ export const Product: React.FC<{
 	const { name, slug, thumbnail, translation } = product;
 	const { defaultLocale, locale } = useRouter();
 	const isNotDefaultLocale = locale !== defaultLocale;
-	const { addToCart, isInCart } = useContext(CartContext);
+	const { addToCart, isInCart } = useCart();
 
 	const description = isNotDefaultLocale
 		? translation?.description

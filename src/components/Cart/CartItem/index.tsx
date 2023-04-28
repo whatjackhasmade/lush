@@ -1,5 +1,6 @@
-import { CartContext, CartItem as CartItemType } from "lush/context";
-import { FC, useContext } from "react";
+import { CartItem as CartItemType } from "lush/context";
+import { useCart } from "lush/hooks";
+import { FC } from "react";
 import Image from "next/image";
 
 import * as S from "./styles";
@@ -9,7 +10,7 @@ import { Title, VisuallyHidden } from "lush/components";
 
 export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 	const { thumbnail } = product;
-	const { quantitySet, removeFromCart } = useContext(CartContext);
+	const { quantitySet, removeFromCart } = useCart();
 	const { t } = useTranslation(Translation.Common);
 
 	return (

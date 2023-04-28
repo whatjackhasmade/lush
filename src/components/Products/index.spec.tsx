@@ -1,4 +1,4 @@
-import { render } from "@testing-library/react";
+import { renderWithTheme } from "../../../.jest/renderWithTheme";
 import { Products } from ".";
 
 import { MockedProvider } from "../../../.jest";
@@ -37,7 +37,7 @@ const mocks: MockedResponse[] = [
 
 describe("Products", () => {
 	it("should render correctly", () => {
-		const { container } = render(
+		const { container } = renderWithTheme(
 			<MockedProvider mocks={mocks}>
 				<Products />
 			</MockedProvider>

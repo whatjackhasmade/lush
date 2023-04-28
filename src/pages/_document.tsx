@@ -1,5 +1,11 @@
-// pages/_document.tsx file
-import Document, { DocumentContext } from "next/document";
+import * as React from "react";
+import Document, {
+	DocumentContext,
+	Html,
+	Head,
+	Main,
+	NextScript,
+} from "next/document";
 import { ServerStyleSheet } from "styled-components";
 
 export default class MyDocument extends Document {
@@ -8,26 +14,31 @@ export default class MyDocument extends Document {
 		const originalRenderPage = ctx.renderPage;
 
 		try {
-			const initialProps = await Document.getInitialProps(ctx);
-
 			ctx.renderPage = () =>
 				originalRenderPage({
 					enhanceApp: (App) => (props) =>
-						sheet.collectStyles(<App {...props} />), //gets the styles from all the components inside <App>
+						sheet.collectStyles(<App {...props} />),
 				});
 
+			const initialProps = await Document.getInitialProps(ctx);
 			return {
 				...initialProps,
-				styles: (
-					<>
-						{initialProps.styles}
-						{/*👇 insert the collected styles to the html document*/}
-						{sheet.getStyleElement()}
-					</>
-				),
+				styles: [initialProps.styles, sheet.getStyleElement()],
 			};
 		} finally {
 			sheet.seal();
 		}
+	}
+
+	render() {
+		return (
+			<Html>
+				<Head />
+				<body>
+					<Main />
+					<NextScript />
+				</body>
+			</Html>
+		);
 	}
 }

@@ -1,5 +1,5 @@
-import { CartContext } from "lush/context";
-import { FC, useContext, useRef, useState } from "react";
+import { useCart } from "lush/hooks";
+import { FC, useRef, useState } from "react";
 
 import * as S from "./styles";
 import { Translation } from "lush/enums";
@@ -21,7 +21,7 @@ const IconBag = () => (
 
 export const Cart: FC<CartProps> = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const { cart, count } = useContext(CartContext);
+	const { cart, count } = useCart();
 	const { t } = useTranslation(Translation.Common);
 	const ref = useRef<HTMLElement>(null);
 
