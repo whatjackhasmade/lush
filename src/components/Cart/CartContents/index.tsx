@@ -3,11 +3,14 @@ import FocusLock from "react-focus-lock";
 import { useCart, useOnClickOutside, useReturnFocus } from "lush/hooks";
 
 import * as S from "./styles";
-import { Icon, Scrollbox, Text, Title, VisuallyHidden } from "lush/components";
+import { FillMyCart, Icon, Text, Title, VisuallyHidden } from "lush/components";
 import { CartItem } from "../CartItem";
 import { CartFooter } from "../Footer";
+import { useTranslation } from "next-i18next";
+import { Translation } from "lush/enums";
 
 export const CartContents: FC = () => {
+	const { t } = useTranslation(Translation.Common);
 	const { cart, count, pullout } = useCart();
 	const refPullout = useRef<HTMLElement>(null);
 	useReturnFocus();
@@ -18,37 +21,59 @@ export const CartContents: FC = () => {
 
 	return (
 		<S.Cart ref={refPullout}>
-			<S.Contents>
-				<S.Header>
-					<Title family="inter">Cart ({count})</Title>
-					<S.Close
-						onClick={(event) => {
-							event.preventDefault();
-							pullout.setIsOpen(false);
-						}}
-						type="button"
-					>
-						<VisuallyHidden>Close cart</VisuallyHidden>
-						<Icon.Times />
-					</S.Close>
-				</S.Header>
-				<S.Content>
-					{!count && (
-						<>
-							<Title family="inter">Your bag is empty</Title>
-							<Text>Sounds like a good time to start shopping!</Text>
-						</>
-					)}
-					{!!cart.length && (
-						<S.Items>
-							{cart.map((item) => (
-								<CartItem key={item.product.id} {...item} />
-							))}
-						</S.Items>
-					)}
-				</S.Content>
-				<CartFooter />
-			</S.Contents>
+			<FocusLock className="focus-lock">
+				<S.Contents>
+					<S.Header>
+						<Title family="inter">
+							{t("cart.title", {
+								count,
+							})}
+						</Title>
+						<S.Close
+							onClick={(event) => {
+								event.preventDefault();
+								pullout.setIsOpen(false);
+							}}
+							type="button"
+						>
+							<VisuallyHidden>{t("cart.close")}</VisuallyHidden>
+							<Icon.Times />
+						</S.Close>
+					</S.Header>
+					<S.Content>
+						{!count && (
+							<S.Empty>
+								<Icon.Bag />
+								<Title
+									family="inter"
+									margin={{
+										top: "regular",
+									}}
+								>
+									{t("cart.empty.title")}
+								</Title>
+								<Text
+									margin={{
+										bottom: "large",
+										top: "regular",
+									}}
+								>
+									{t("cart.empty.body")}
+								</Text>
+								<FillMyCart />
+							</S.Empty>
+						)}
+						{!!cart.length && (
+							<S.Items>
+								{cart.map((item) => (
+									<CartItem key={item.product.id} {...item} />
+								))}
+							</S.Items>
+						)}
+					</S.Content>
+					{count && <CartFooter />}
+				</S.Contents>
+			</FocusLock>
 		</S.Cart>
 	);
 };

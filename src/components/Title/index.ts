@@ -26,7 +26,7 @@ export const Title = styled.h2<TitleProps>(
 		color: ${colourKey && colours[colourKey]};
 		${mapFontSize(size)};
 		font-family: ${fontFamily[family ?? "handwritten"]};
-		font-weight: ${weight && fontWeight[weight]};
+		font-weight: ${fontWeight[weight ?? "medium"]};
 		${mapMargin(margin)};
 	`
 );

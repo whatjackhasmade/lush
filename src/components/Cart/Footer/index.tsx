@@ -8,7 +8,8 @@ import { Translation } from "lush/enums";
 import { useTranslation } from "next-i18next";
 
 export const CartFooter = () => {
-	const { costTotal, hasFreeDelivery } = useCart();
+	const { costTotal, costTotalRequiredForFreeDelivery, hasFreeDelivery } =
+		useCart();
 	const { t } = useTranslation(Translation.Common);
 
 	return (
@@ -29,7 +30,11 @@ export const CartFooter = () => {
 						{hasFreeDelivery
 							? t("cart.deliveryFree")
 							: t("cart.deliveryNotFree", {
-									amount: formatCurrency(28, "en-GB", costTotal?.currency),
+									amount: formatCurrency(
+										costTotalRequiredForFreeDelivery - costTotal?.amount,
+										"en-GB",
+										costTotal?.currency
+									),
 							  })}
 					</Text>
 				</S.Delivery>

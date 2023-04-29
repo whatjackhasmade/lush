@@ -37,7 +37,7 @@ describe("AddToCart", () => {
 				slug: "test-product-type",
 			},
 			pricing: {
-				priceRangeUndiscounted: {
+				priceRange: {
 					stop: {
 						gross: {
 							amount: 100,

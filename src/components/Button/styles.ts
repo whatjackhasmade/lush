@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 import { ButtonProps } from "./types";
 import { Variant } from "lush/enums";
-import { focus, hover } from "lush/utils";
+import { hover } from "lush/utils";
 
 export const Button = styled.button<Omit<ButtonProps, "children">>(
 	({ theme, unstyled, variant = Variant.Primary }) =>
@@ -46,19 +46,5 @@ export const Button = styled.button<Omit<ButtonProps, "children">>(
 			&[aria-busy] {
 				pointer-events: none;
 			}
-
-			${focus(
-				css`
-					box-shadow: ${`inset 0px 0px 0px 2px ${
-						{
-							[Variant.Primary]: theme.colours.primary["600"],
-							[Variant.Secondary]: theme.colours.secondary["600"],
-						}[variant]
-					}`};
-				`,
-				css`
-					box-shadow: none;
-				`
-			)}
 		`
 );

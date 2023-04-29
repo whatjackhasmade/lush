@@ -12,9 +12,9 @@ import Link from "next/link";
 
 export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 	const { isAvailableForPurchase, slug, thumbnail } = product;
-	const { quantitySet, removeFromCart } = useCart();
+	const { quantitySet, removeFromCart, pullout } = useCart();
 	const { t } = useTranslation(Translation.Common);
-	const gross = product?.pricing?.priceRangeUndiscounted?.stop?.gross;
+	const gross = product?.pricing?.priceRange?.stop?.gross;
 
 	return (
 		<S.Item key={product.id}>
@@ -31,6 +31,9 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 				)}
 				<S.Details>
 					<Link
+						onClick={() => {
+							pullout.setIsOpen(false);
+						}}
 						href={{
 							pathname: Pathname.Product,
 							query: { slug },
@@ -38,7 +41,7 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 					>
 						<Title as="h3">{product.name}</Title>
 					</Link>
-					<Text>{product.category?.id}</Text>
+					<Text>{product.category?.name}</Text>
 				</S.Details>
 				<S.Remove onClick={() => removeFromCart(product.id)} type="button">
 					<Icon.Trash />

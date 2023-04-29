@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 import { Text } from "lush/components";
 import { focus, mapFontSize } from "lush/utils";
-import { motion } from "framer-motion";
 
 export const Item = styled.div(
 	({ theme }) => css`
@@ -38,6 +37,17 @@ export const Details = styled.div(
 			${mapFontSize("labelSmall")};
 			text-transform: uppercase;
 			letter-spacing: 1px;
+		}
+
+		a {
+			${focus(
+				css`
+					text-decoration: underline;
+				`,
+				css`
+					text-decoration: none;
+				`
+			)}
 		}
 	`
 );
@@ -79,16 +89,6 @@ export const QuantityUpdate = styled.button(
 			background-color: ${theme.colours.background["100"]};
 			border-color: ${theme.colours.background["300"]};
 		}
-
-		${focus(
-			css`
-				background-color: ${theme.colours.background["200"]};
-				border-color: ${theme.colours.background["400"]};
-			`,
-			css`
-				box-shadow: none;
-			`
-		)}
 	`
 );
 

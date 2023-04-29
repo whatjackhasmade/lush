@@ -4,6 +4,12 @@
 	"inStock": "In stock",
 	"onlineDelivery": "For online delivery",
 	"cart": {
+		"title": "Cart ({{count}})",
+		"close": "Close cart",
+		"empty": {
+			"title": "Your bag is empty",
+			"body": "Sounds like a good time to start shopping!"
+		},
 		"deliveryFree": "Your order qualifies for FREE standard UK delivery!",
 		"deliveryNotFree": "Almost there! Spend another {{amount}} to get FREE UK standard delivery.",
 		"total": "Total"

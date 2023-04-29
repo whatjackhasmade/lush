@@ -10,6 +10,7 @@ export const CheckoutButton: FC = () => {
 
 		const timeoutId = setTimeout(() => {
 			setIsLoading(false);
+
 			if (typeof window !== "undefined")
 				window.alert(
 					"In the real world, this would take you to the checkout page."

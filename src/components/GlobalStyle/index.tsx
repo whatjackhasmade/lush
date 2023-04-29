@@ -55,6 +55,11 @@ export const GlobalStyle = createGlobalStyle(
 			background-color: ${theme.colours.background["000"]};
 		}
 
+		*:focus,
+		*:focus-visible {
+			box-shadow: ${theme.colours.primary["400"]} 0px 0px 0px 2px inset;
+		}
+
 		a {
 			color: inherit;
 		}

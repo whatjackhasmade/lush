@@ -86,6 +86,7 @@ export interface CartContextState {
 	addToCart: (product: ProductFragment) => void;
 	cart: CartItem[];
 	count: number;
+	costTotalRequiredForFreeDelivery: number;
 	hasFreeDelivery: boolean;
 	isInCart: (productId: ProductFragment["id"]) => boolean;
 	pullout: {
@@ -110,6 +111,7 @@ const CartContext = createContext<CartContextState>({
 	addToCart: () => {},
 	cart: [],
 	count: 0,
+	costTotalRequiredForFreeDelivery: 50,
 	hasFreeDelivery: false,
 	isInCart: () => false,
 	quantitySet: () => {},
@@ -159,6 +161,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 					});
 				},
 				cart,
+				costTotalRequiredForFreeDelivery: 50,
 				count: cart.reduce((acc, cartItem) => acc + cartItem.quantity, 0),
 				hasFreeDelivery,
 				quantitySet: (payload) => {

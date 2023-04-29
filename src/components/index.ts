@@ -13,7 +13,6 @@ export * from "./Icon";
 export * from "./Metadata";
 export * from "./Products";
 export * from "./ProductOverview";
-export * from "./Scrollbox";
 export * from "./Skeleton";
 export * from "./Space";
 export * from "./Text";

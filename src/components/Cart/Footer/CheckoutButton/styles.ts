@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { focus, hover } from "lush/utils";
+import { hover } from "lush/utils";
 
 export const Button = styled.button(
 	({ theme }) => css`
@@ -28,15 +28,5 @@ export const Button = styled.button(
 		&[aria-busy] {
 			pointer-events: none;
 		}
-
-		${focus(
-			css`
-				box-shadow: ${`inset 0px 0px 0px 2px ${theme.colours.background["100"]}`};
-				background-color: ${theme.colours.background["900"]};
-			`,
-			css`
-				box-shadow: none;
-			`
-		)}
 	`
 );

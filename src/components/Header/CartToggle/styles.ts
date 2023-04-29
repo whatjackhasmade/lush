@@ -39,7 +39,7 @@ export const Count = styled.span(
 		transform: translate(25%, -25%);
 
 		color: ${theme.colours.default["000"]};
-		background-color: ${theme.colours.background["500"]};
+		background-color: ${theme.colours.background["900"]};
 		${mapFontSize("complementarySmall")};
 		font-weight: ${theme.typography.fontWeight.bold};
 		line-height: 1;

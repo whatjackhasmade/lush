@@ -1,7 +1,7 @@
 import { useCart } from "lush/hooks";
 import { Translation } from "lush/enums";
 import { ProductFragment } from "lush/schema";
-import formatCurrency from "lush/utils/formatCurrency";
+import { formatCurrency } from "lush/utils";
 import { useTranslation } from "next-i18next";
 import { FC } from "react";
 import { Button, Skeleton } from "lush/components";
@@ -15,7 +15,7 @@ export const AddToCart: FC<AddToCartProps> = ({ product, loading }) => {
 	const { addToCart, cart } = useCart();
 	const { t } = useTranslation(Translation.Common);
 
-	const gross = product?.pricing?.priceRangeUndiscounted?.stop?.gross;
+	const gross = product?.pricing?.priceRange?.stop?.gross;
 
 	return (
 		<Button

@@ -10,7 +10,7 @@ import { GlobalStyle } from "lush/components";
 import { MotionConfig } from "framer-motion";
 
 const handwritten = localFont({ src: "../assets/fonts/handwritten.woff" });
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "700"] });
 
 function App({ Component, pageProps }: AppProps) {
 	return (

@@ -29,7 +29,9 @@ export const Cart = styled(motion.aside).attrs(({ theme }) => ({
 		max-width: 100%;
 		background-color: ${theme.colours.background["000"]};
 
-		overflow: visible;
+		.focus-lock {
+			height: 100%;
+		}
 	`
 );
 
@@ -69,6 +71,20 @@ export const Content = styled.div(
 	({ theme }) => css`
 		flex: 1;
 		padding: 0 ${theme.space.regular} ${theme.space.xLarge};
+	`
+);
+
+export const Empty = styled.div(
+	({ theme }) => css`
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		height: 100%;
+
+		svg {
+			width: ${theme.space.xLarge};
+		}
 	`
 );
 
