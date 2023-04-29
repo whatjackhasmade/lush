@@ -124,7 +124,7 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 								right: "large",
 							}}
 						>
-							{t("inStock")}
+							{t("cart.inStock")}
 						</Text>
 						<Text>{t("onlineDelivery")}</Text>
 					</>
@@ -139,7 +139,7 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 								right: "large",
 							}}
 						>
-							{t("outOfStock")}
+							{t("cart.outOfStock")}
 						</Text>
 						<Text>{t("restockSoon")}</Text>
 					</>

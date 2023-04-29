@@ -7,17 +7,17 @@ import { Translation } from "lush/enums";
 import { CartToggle } from "./CartToggle";
 
 export const Header: React.FC = () => {
-	const { t } = useTranslation(Translation.ComponentHeader);
+	const { t } = useTranslation(Translation.Common);
 
 	const navigation = [
 		{
-			title: t("navigation.index"),
+			title: t("header.navigation.index"),
 			href: {
 				pathname: Pathname.Index,
 			},
 		},
 		{
-			title: t("navigation.products"),
+			title: t("header.navigation.products"),
 			href: {
 				pathname: Pathname.Index,
 			},
@@ -31,7 +31,7 @@ export const Header: React.FC = () => {
 					pathname: Pathname.Index,
 				}}
 			>
-				<S.Title>{t("title")}</S.Title>
+				<S.Title>{t("header.title")}</S.Title>
 			</Link>
 			<S.Navigation>
 				{navigation.map(({ title, href }) => (

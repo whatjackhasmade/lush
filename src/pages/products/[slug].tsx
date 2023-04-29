@@ -43,10 +43,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
 	try {
 		return {
-			props: await serverSideTranslations(locale, [
-				Translation.Common,
-				Translation.ComponentHeader,
-			]),
+			props: await serverSideTranslations(locale, [Translation.Common]),
 		};
 	} catch (error) {
 		return { notFound: true };

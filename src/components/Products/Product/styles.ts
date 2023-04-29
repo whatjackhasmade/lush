@@ -26,11 +26,15 @@ export const Image = styled.div`
 	width: 100%;
 `;
 
-export const Info = styled.div`
-	align-items: flex-start;
-	display: flex;
-	flex-direction: column;
-`;
+export const Info = styled.div(
+	({ theme }) => css`
+		align-items: flex-start;
+		display: flex;
+		flex-direction: column;
+		padding: ${theme.space.regular} ${theme.space.regular}
+			${theme.space.xxxLarge};
+	`
+);
 
 export const View = styled.button(
 	({ theme }) => css`
@@ -43,7 +47,7 @@ export const View = styled.button(
 
 		background-color: ${theme.colours.background["000"]};
 		border-radius: 200px;
-		${mapFontSize("labelSmall")};
+		${mapFontSize("labelLarge")};
 		letter-spacing: 1px;
 		padding: ${theme.space.regular};
 		border: 1px solid ${theme.colours.background["100"]};

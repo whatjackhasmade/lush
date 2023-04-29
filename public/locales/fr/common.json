@@ -1,10 +1,46 @@
 {
-	"addToCart": "Add to cart for {{price}}",
-	"addAnotherToCart": "Add another for {{price}}",
-	"inStock": "In stock",
-	"onlineDelivery": "For online delivery",
+	"header": {
+		"title": "LUSH",
+		"navigation": {
+			"index": "Page d'accueil",
+			"products": "Produits"
+		}
+	},
+	"product": {
+		"add": "Ajouter au panier",
+		"added": "Ajouté au panier",
+		"addAnother": "Ajouter un autre"
+	},
+	"error": {
+		"generic": "Désolé, il semble que quelque chose ne va pas"
+	},
+	"filters": {
+		"clear": "Effacer toutes les catégories",
+		"title": "Filtrer nos produits par catégorie"
+	},
+	"products": {
+		"loading": {
+			"title": "Chargement des produits"
+		},
+		"list": {
+			"title": "Produits"
+		}
+	},
+	"cart": {
+		"title": "Panier ({{count}})",
+		"close": "Fermer le panier",
+		"empty": {
+			"title": "Votre sac est vide",
+			"body": "C'est le moment idéal pour commencer vos achats !"
+		},
+		"deliveryFree": "Votre commande est éligible à la livraison standard GRATUITE au Royaume-Uni !",
+		"deliveryNotFree": "Vous y êtes presque ! Ajoutez {{amount}} pour bénéficier de la livraison standard GRATUITE au Royaume-Uni.",
+		"total": "Total",
+		"inStock": "En stock",
+		"onlineDelivery": "Pour une livraison en ligne"
+	},
 	"language": {
-		"en": "English",
+		"en": "Anglais",
 		"fr": "Français"
 	}
 }

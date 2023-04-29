@@ -9,6 +9,7 @@ export * from "./FillMyCart";
 export * from "./Filters";
 export * from "./GlobalStyle";
 export * from "./Header";
+export * from "./Hero";
 export * from "./Icon";
 export * from "./Metadata";
 export * from "./Products";

@@ -1,8 +1,31 @@
 {
-	"addToCart": "Add to cart for {{price}}",
-	"addAnotherToCart": "Add another for {{price}}",
-	"inStock": "In stock",
-	"onlineDelivery": "For online delivery",
+	"header": {
+		"title": "LUSH",
+		"navigation": {
+			"index": "Homepage",
+			"products": "Products"
+		}
+	},
+	"product": {
+		"add": "Add to cart",
+		"added": "Added to cart",
+		"addAnother": "Add another"
+	},
+	"error": {
+		"generic": "Sorry, it looks like something went wrong"
+	},
+	"filters": {
+		"clear": "Clear all categories",
+		"title": "Filter our products by category"
+	},
+	"products": {
+		"loading": {
+			"title": "Loading products"
+		},
+		"list": {
+			"title": "Products"
+		}
+	},
 	"cart": {
 		"title": "Cart ({{count}})",
 		"close": "Close cart",
@@ -12,7 +35,9 @@
 		},
 		"deliveryFree": "Your order qualifies for FREE standard UK delivery!",
 		"deliveryNotFree": "Almost there! Spend another {{amount}} to get FREE UK standard delivery.",
-		"total": "Total"
+		"total": "Total",
+		"inStock": "In stock",
+		"onlineDelivery": "For online delivery"
 	},
 	"language": {
 		"en": "English",

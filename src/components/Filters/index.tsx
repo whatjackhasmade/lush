@@ -1,12 +1,15 @@
-import { FC } from "react";
+import { Fragment, FC } from "react";
 
 import * as S from "./styles";
 import { useFilters } from "lush/hooks/useFilters";
 import { useCategoriesQuery } from "lush/schema";
-import { Skeleton } from "lush/components";
+import { Error, Skeleton, Title } from "lush/components";
+import { useTranslation } from "next-i18next";
+import { Translation } from "lush/enums";
 
 export const Filters: FC = () => {
-	const { activeCategories, toggleCategory, clearAllCategories } = useFilters();
+	const { t } = useTranslation(Translation.Common);
+	const { activeCategories, toggleCategory } = useFilters();
 
 	const { data, error, loading } = useCategoriesQuery({
 		variables: {
@@ -16,31 +19,22 @@ export const Filters: FC = () => {
 
 	const categories = data?.categories?.edges?.map(({ node }) => node) ?? [];
 	const isLoading = !data && loading;
-	// const isLoading = true;
 
 	return (
 		<S.Filters>
-			{error && <p>Sorry, it looks like something went wrong</p>}
+			{error && <Error>{t("error.generic")}</Error>}
 			<>
 				<S.Header>
-					<h2>Filter our products by category</h2>
-					<S.Category
-						as="button"
-						disabled={isLoading || !activeCategories.length}
-						isFull
-						onClick={() => {
-							clearAllCategories();
-						}}
-					>
-						Clear all categories
-					</S.Category>
+					<Title family="inter">{t("filters.title")}</Title>
 				</S.Header>
 				<S.Categories>
 					{isLoading &&
 						Array.from({ length: 36 }).map((_, index) => (
-							<S.Skeleton key={index}>
-								<Skeleton />
-							</S.Skeleton>
+							<Skeleton
+								key={`category-skeleton-${index}`}
+								height="2.4rem"
+								width="7rem"
+							/>
 						))}
 					{!isLoading &&
 						categories?.map((category) => {
@@ -49,25 +43,24 @@ export const Filters: FC = () => {
 							);
 
 							return (
-								<>
+								<Fragment key={`category-option-${category.id}`}>
 									<S.Input
-										id={`category-${category.id}`}
+										id={`category-option-${category.id}`}
 										name="category"
 										type="checkbox"
 										checked={isActive}
-										onChange={(event) => {
-											event.preventDefault();
+										onChange={() => {
 											toggleCategory(category);
 										}}
 									/>
 									<S.Category
 										isActive={isActive}
 										key={category.id}
-										htmlFor={`category-${category.id}`}
+										htmlFor={`category-option-${category.id}`}
 									>
 										{category.name}
 									</S.Category>
-								</>
+								</Fragment>
 							);
 						})}
 				</S.Categories>

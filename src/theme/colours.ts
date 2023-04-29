@@ -68,5 +68,7 @@ export const colours = {
 		"900": "#191919",
 		"1000": "#000000",
 	},
+	focus: "#8019d2",
 	outline: "#999999",
+	white: "#ffffff",
 } as const;

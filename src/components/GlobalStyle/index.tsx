@@ -57,7 +57,7 @@ export const GlobalStyle = createGlobalStyle(
 
 		*:focus,
 		*:focus-visible {
-			box-shadow: ${theme.colours.primary["400"]} 0px 0px 0px 2px inset;
+			box-shadow: ${theme.colours.focus} 0px 0px 0px 2px inset;
 		}
 
 		a {

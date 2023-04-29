@@ -8,6 +8,7 @@ export enum SpaceEnum {
 	xLarge = "2rem",
 	xxLarge = "2.5rem",
 	xxxLarge = "3rem",
+	xxxxLarge = "6rem",
 }
 
 export const space = Object.keys(SpaceEnum).reduce(

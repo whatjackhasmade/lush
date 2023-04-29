@@ -28,7 +28,7 @@ export const Skeleton = styled.div<SkeletonProps>(
 			#f6f7f8 100%
 		);
 		background-repeat: no-repeat;
-		background-size: 800px 104px;
+		background-size: 800px 800px;
 		border-radius: ${borderRadius};
 		display: inline-block;
 		line-height: 1;

@@ -41,6 +41,10 @@ export const typography = {
 			desktop: "2rem",
 			mobile: "1.6875rem",
 		},
+		displayXLarge: {
+			desktop: "3rem",
+			mobile: "2.25rem",
+		},
 	},
 	fontWeight: {
 		regular: 400,
