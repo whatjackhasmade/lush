@@ -1,15 +1,18 @@
 import { FC, useEffect, useState } from "react";
+import { useTranslation } from "next-i18next";
 
 import * as S from "./styles";
+import { Translation } from "lush/enums";
 
 export const CheckoutButton: FC = () => {
-	const [isLoading, setIsLoading] = useState(false);
+	const { t } = useTranslation(Translation.Common);
+	const [isEmulatingLoading, setEmulateLoading] = useState(false);
 
 	useEffect(() => {
-		if (!isLoading) return;
+		if (!isEmulatingLoading) return;
 
 		const timeoutId = setTimeout(() => {
-			setIsLoading(false);
+			setEmulateLoading(false);
 
 			if (typeof window !== "undefined")
 				window.alert(
@@ -20,19 +23,19 @@ export const CheckoutButton: FC = () => {
 		return () => {
 			clearTimeout(timeoutId);
 		};
-	}, [isLoading]);
+	}, [isEmulatingLoading]);
 
 	return (
 		<>
 			<S.Button
-				disabled={isLoading}
+				disabled={isEmulatingLoading}
 				type="button"
 				onClick={(event) => {
 					event.preventDefault();
-					setIsLoading(true);
+					setEmulateLoading(true);
 				}}
 			>
-				Checkout
+				{t("cart.checkout")}
 			</S.Button>
 		</>
 	);

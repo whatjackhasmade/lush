@@ -8,7 +8,6 @@ import {
 } from "@apollo/client";
 import { deepMerge } from "lush/utils";
 import { GraphQL } from "lush/enums";
-import { onError } from "@apollo/client/link/error";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
@@ -16,18 +15,16 @@ type TApolloClient = ApolloClient<NormalizedCacheObject> | undefined;
 
 let apolloClient: TApolloClient;
 
-const errorLink = onError(() => {});
-
-const httpLink = new HttpLink({
-	uri: GraphQL.URL,
-});
-
 function initializeApollo(initialState: any = null) {
 	const client =
 		apolloClient ??
 		new ApolloClient({
 			ssrMode: typeof window === "undefined",
-			link: from([errorLink, httpLink]),
+			link: from([
+				new HttpLink({
+					uri: GraphQL.URL,
+				}),
+			]),
 			cache: new InMemoryCache(),
 		});
 

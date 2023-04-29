@@ -20,22 +20,26 @@ export const CartFooter = () => {
 						{t("cart.total")}
 					</Text>
 					<Text isBold size="displayRegular">
-						{!costTotal?.currency
+						{!costTotal.currency
 							? String.fromCharCode(8211)
-							: formatCurrency(costTotal?.amount, "en-GB", costTotal?.currency)}
+							: formatCurrency(costTotal.amount, "en-GB", costTotal.currency)}
 					</Text>
 				</S.Total>
 				<S.Delivery>
 					<Text colourKey={hasFreeDelivery ? "success" : "warning"}>
-						{hasFreeDelivery
-							? t("cart.deliveryFree")
-							: t("cart.deliveryNotFree", {
-									amount: formatCurrency(
-										costTotalRequiredForFreeDelivery - costTotal?.amount,
-										"en-GB",
-										costTotal?.currency
-									),
-							  })}
+						{(() => {
+							if (hasFreeDelivery) return t("cart.deliveryFree");
+
+							if (!costTotal.currency) return t("cart.deliveryNotFree");
+
+							return t("cart.deliveryNotFree", {
+								amount: formatCurrency(
+									costTotalRequiredForFreeDelivery - costTotal.amount,
+									"en-GB",
+									costTotal.currency
+								),
+							});
+						})()}
 					</Text>
 				</S.Delivery>
 			</S.Info>

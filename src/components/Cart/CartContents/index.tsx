@@ -3,9 +3,9 @@ import FocusLock from "react-focus-lock";
 import { useCart, useOnClickOutside, useReturnFocus } from "lush/hooks";
 
 import * as S from "./styles";
-import { FillMyCart, Icon, Text, Title, VisuallyHidden } from "lush/components";
+import { Icon, Text, Title, VisuallyHidden } from "lush/components";
 import { CartItem } from "../CartItem";
-import { CartFooter } from "../Footer";
+import { CartFooter } from "./CartFooter";
 import { useTranslation } from "next-i18next";
 import { Translation } from "lush/enums";
 
@@ -60,7 +60,6 @@ export const CartContents: FC = () => {
 								>
 									{t("cart.empty.body")}
 								</Text>
-								<FillMyCart />
 							</S.Empty>
 						)}
 						{!!cart.length && (

@@ -37,7 +37,8 @@
 			"body": "Sounds like a good time to start shopping!"
 		},
 		"deliveryFree": "Your order qualifies for FREE standard UK delivery!",
-		"deliveryNotFree": "Almost there! Spend another {{amount}} to get FREE UK standard delivery.",
+		"deliveryNotFree": "Almost there! Spend more to get FREE UK standard delivery.",
+		"deliveryNotFreeAmount": "Almost there! Spend another {{amount}} to get FREE UK standard delivery.",
 		"total": "Total",
 		"inStock": "In stock",
 		"onlineDelivery": "For online delivery"

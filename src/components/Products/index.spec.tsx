@@ -8,6 +8,7 @@ import {
 	ProductsQuery,
 	ProductsQueryVariables,
 } from "lush/schema";
+import { Pagination } from "lush/enums";
 
 const mocks: MockedResponse[] = [
 	{
@@ -15,7 +16,14 @@ const mocks: MockedResponse[] = [
 			query: ProductsDocument,
 			variables: {
 				channel: "uk",
-				first: 100,
+				first: Pagination.Limit,
+				language: "EN",
+				filter: {
+					isAvailable: true,
+					isPublished: true,
+					isVisibleInListing: true,
+					categories: [],
+				},
 			} as ProductsQueryVariables,
 		},
 		result: {

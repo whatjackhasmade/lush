@@ -5,7 +5,6 @@ export * from "./Container";
 export * from "./DefaultLayout";
 export * from "./Error";
 export * from "./ErrorHero";
-export * from "./FillMyCart";
 export * from "./Filters";
 export * from "./GlobalStyle";
 export * from "./Header";
