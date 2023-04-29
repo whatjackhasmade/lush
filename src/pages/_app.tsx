@@ -8,6 +8,7 @@ import { ThemeProvider } from "styled-components";
 import { theme } from "lush/theme";
 import { GlobalStyle } from "lush/components";
 import { MotionConfig } from "framer-motion";
+import toast, { ToastBar, Toaster } from "react-hot-toast";
 
 const handwritten = localFont({ src: "../assets/fonts/handwritten.woff" });
 const inter = Inter({ subsets: ["latin"], weight: ["400", "500", "700"] });
@@ -28,6 +29,23 @@ function App({ Component, pageProps }: AppProps) {
 						<CartProvider>
 							<DefaultLayout>
 								<Component {...pageProps} />
+								<Toaster position="bottom-center" reverseOrder>
+									{(t) => (
+										<ToastBar toast={t}>
+											{({ icon, message }) => (
+												<>
+													{icon}
+													{message}
+													{t.type !== "loading" && (
+														<button onClick={() => toast.dismiss(t.id)}>
+															X
+														</button>
+													)}
+												</>
+											)}
+										</ToastBar>
+									)}
+								</Toaster>
 							</DefaultLayout>
 						</CartProvider>
 					</ApolloProvider>

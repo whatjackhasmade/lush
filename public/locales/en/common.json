@@ -11,6 +11,9 @@
 		"added": "Added to cart",
 		"addAnother": "Add another"
 	},
+	"hero": {
+		"title": "LUSH Cosmetics"
+	},
 	"error": {
 		"generic": "Sorry, it looks like something went wrong"
 	},

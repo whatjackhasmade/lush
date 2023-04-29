@@ -6,8 +6,11 @@ import * as S from "./styles";
 import { useRouter } from "next/router";
 import { useFilters } from "lush/hooks";
 import { useTranslation } from "next-i18next";
-import { Pagination, Translation } from "lush/enums";
-import { FC } from "react";
+import { Pagination, ToastId, Translation } from "lush/enums";
+import { FC, useCallback, useEffect } from "react";
+import { useInView } from "lush/hooks";
+import { toast } from "react-hot-toast";
+import { deepMerge } from "lush/utils";
 
 const languageCodeFromLocale = (locale = "") =>
 	({
@@ -20,7 +23,9 @@ export const Products: FC = () => {
 	const { activeCategories } = useFilters();
 	const { t } = useTranslation(Translation.Common);
 
-	const { data, error, loading } = useProductsQuery({
+	const { ref: refInfiniteScroll, isInView: shouldLoadMore } = useInView();
+
+	const { data, error, fetchMore, loading } = useProductsQuery({
 		variables: {
 			channel: "uk",
 			first: Pagination.Limit,
@@ -35,7 +40,50 @@ export const Products: FC = () => {
 	});
 
 	const isLoading = !data && loading;
-	const products = data?.products?.edges?.map(({ node }) => node) ?? [];
+	const products = data?.products?.edges;
+
+	const fetchMoreProducts = useCallback(() => {
+		fetchMore({
+			updateQuery: (previousResult, { fetchMoreResult }) => {
+				if (!fetchMoreResult?.products) return previousResult;
+				if (!previousResult?.products) return fetchMoreResult;
+
+				return deepMerge(previousResult, fetchMoreResult);
+			},
+			variables: {
+				first: Pagination.Limit,
+				after: products?.[products?.length - 1]?.cursor,
+			},
+		}).catch(() => {
+			toast.error(
+				<>
+					{t("error.generic")}
+					<button
+						onClick={(event) => {
+							event.preventDefault();
+							toast.dismiss(ToastId.ProductsError);
+
+							// Wait for the toast to be dismissed before fetching more products
+							setTimeout(() => {
+								fetchMoreProducts();
+							}, 400);
+						}}
+					>
+						{t("error.retry")}
+					</button>
+				</>,
+				{
+					id: ToastId.ProductsError,
+				}
+			);
+		});
+	}, [fetchMore, products, t]);
+
+	useEffect(() => {
+		if (!isLoading && shouldLoadMore) {
+			fetchMoreProducts();
+		}
+	}, [fetchMoreProducts, isLoading, shouldLoadMore]);
 
 	return (
 		<div id="products">
@@ -58,13 +106,18 @@ export const Products: FC = () => {
 						<h2>{t("products.list.title")}</h2>
 					</VisuallyHidden>
 					<S.Products>
-						{products.map((product) => (
+						{(products?.map(({ node }) => node) ?? []).map((product) => (
 							<Product
 								key={`product-listing-item-${product.id}`}
 								isLoading={false}
 								product={product}
 							/>
 						))}
+						{loading &&
+							Array.from({ length: Pagination.Limit }).map((_, index) => (
+								<Product key={`product-skeleton-${index}`} isLoading />
+							))}
+						<div ref={refInfiniteScroll} />
 					</S.Products>
 				</>
 			)}

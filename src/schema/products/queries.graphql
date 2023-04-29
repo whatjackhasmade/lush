@@ -20,6 +20,7 @@ query Products(
 		sortBy: $sortBy
 	) {
 		edges {
+			cursor
 			node {
 				...Product
 			}

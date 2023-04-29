@@ -7,7 +7,8 @@ import {
 	from,
 } from "@apollo/client";
 import { deepMerge } from "lush/utils";
-import { GraphQL } from "lush/enums/graphql";
+import { GraphQL } from "lush/enums";
+import { onError } from "@apollo/client/link/error";
 
 export const APOLLO_STATE_PROP_NAME = "__APOLLO_STATE__";
 
@@ -15,20 +16,20 @@ type TApolloClient = ApolloClient<NormalizedCacheObject> | undefined;
 
 let apolloClient: TApolloClient;
 
-function createApolloClient() {
-	return new ApolloClient({
-		ssrMode: typeof window === "undefined",
-		link: from([
-			new HttpLink({
-				uri: GraphQL.URL,
-			}),
-		]),
-		cache: new InMemoryCache(),
-	});
-}
+const errorLink = onError(() => {});
 
-export function initializeApollo(initialState: any = null) {
-	const client = apolloClient ?? createApolloClient();
+const httpLink = new HttpLink({
+	uri: GraphQL.URL,
+});
+
+function initializeApollo(initialState: any = null) {
+	const client =
+		apolloClient ??
+		new ApolloClient({
+			ssrMode: typeof window === "undefined",
+			link: from([errorLink, httpLink]),
+			cache: new InMemoryCache(),
+		});
 
 	// If your page has Next.js data fetching methods that use Apollo Client, the initial state
 	// gets hydrated here

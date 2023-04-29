@@ -17,6 +17,7 @@ query Categories(
 		level: $level
 	) {
 		edges {
+			cursor
 			node {
 				...Category
 			}
