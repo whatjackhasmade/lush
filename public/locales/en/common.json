@@ -1,6 +1,13 @@
 {
 	"addToCart": "Add to cart for {{price}}",
 	"addAnotherToCart": "Add another for {{price}}",
+	"inStock": "In stock",
+	"onlineDelivery": "For online delivery",
+	"cart": {
+		"deliveryFree": "Your order qualifies for FREE standard UK delivery!",
+		"deliveryNotFree": "Almost there! Spend another {{amount}} to get FREE UK standard delivery.",
+		"total": "Total"
+	},
 	"language": {
 		"en": "English",
 		"fr": "Français"

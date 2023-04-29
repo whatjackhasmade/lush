@@ -1,4 +1,4 @@
-export default function formatCurrency(
+export function formatCurrency(
 	amount: string | number,
 	locale: string,
 	currency: string

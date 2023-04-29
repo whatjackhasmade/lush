@@ -5,20 +5,13 @@ import { ProductFragment } from "lush/schema";
 import { Text, Title } from "lush/components";
 import Image from "next/image";
 import { Pathname } from "lush/enums/pathname";
-import { useRouter } from "next/router";
 import { useCart } from "lush/hooks";
 
 export const Product: React.FC<{
 	product: ProductFragment;
 }> = ({ product }) => {
-	const { name, slug, thumbnail, translation } = product;
-	const { defaultLocale, locale } = useRouter();
-	const isNotDefaultLocale = locale !== defaultLocale;
+	const { name, slug, thumbnail } = product;
 	const { addToCart, isInCart } = useCart();
-
-	const description = isNotDefaultLocale
-		? translation?.description
-		: product?.description;
 
 	return (
 		<S.Product>
@@ -40,6 +33,7 @@ export const Product: React.FC<{
 				)}
 				<S.Info>
 					<Title as="h3">{name}</Title>
+					{/* TODO: Add metadata */}
 					<Text>TODO</Text>
 				</S.Info>
 			</Link>

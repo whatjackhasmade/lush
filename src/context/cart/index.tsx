@@ -1,5 +1,11 @@
 import { ProductFragment } from "lush/schema";
-import { createContext, FC, PropsWithChildren, useReducer } from "react";
+import {
+	createContext,
+	FC,
+	PropsWithChildren,
+	useReducer,
+	useState,
+} from "react";
 
 enum CartActionType {
 	PRODUCT_ADD = "PRODUCT_ADD",
@@ -80,7 +86,12 @@ export interface CartContextState {
 	addToCart: (product: ProductFragment) => void;
 	cart: CartItem[];
 	count: number;
+	hasFreeDelivery: boolean;
 	isInCart: (productId: ProductFragment["id"]) => boolean;
+	pullout: {
+		isOpen: boolean;
+		setIsOpen: (isOpen: boolean) => void;
+	};
 	quantitySet: ({
 		productId,
 		quantity,
@@ -89,19 +100,54 @@ export interface CartContextState {
 		quantity: number;
 	}) => void;
 	removeFromCart: (productId: ProductFragment["id"]) => void;
+	costTotal: {
+		amount: number;
+		currency: string;
+	};
 }
 
 const CartContext = createContext<CartContextState>({
 	addToCart: () => {},
 	cart: [],
 	count: 0,
+	hasFreeDelivery: false,
 	isInCart: () => false,
 	quantitySet: () => {},
 	removeFromCart: () => {},
+	pullout: {
+		isOpen: false,
+		setIsOpen: () => {},
+	},
+	costTotal: {
+		amount: 0,
+		currency: "GBP",
+	},
 });
 
 const CartProvider: FC<PropsWithChildren> = ({ children }) => {
+	const [pulloutIsOpen, setPulloutIsOpen] = useState(false);
 	const [cart, dispatch] = useReducer(cartReducer, []);
+
+	const costTotal = cart.reduce(
+		(acc, cartItem) => {
+			const { amount, currency } =
+				cartItem?.product?.pricing?.priceRange?.stop?.gross ?? {};
+
+			if (!amount || !currency) return acc;
+
+			return {
+				amount: acc.amount + amount * cartItem.quantity,
+				currency,
+			};
+		},
+		{
+			amount: 0,
+			// TODO: get currency from context
+			currency: "GBP",
+		} as CartContextState["costTotal"]
+	);
+
+	const hasFreeDelivery = costTotal?.amount >= 50;
 
 	return (
 		<CartContext.Provider
@@ -114,6 +160,7 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 				},
 				cart,
 				count: cart.reduce((acc, cartItem) => acc + cartItem.quantity, 0),
+				hasFreeDelivery,
 				quantitySet: (payload) => {
 					dispatch({
 						type: CartActionType.PRODUCT_QUANTITY_SET,
@@ -122,12 +169,17 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 				},
 				isInCart: (productId) =>
 					cart.some((cartItem) => cartItem.product.id === productId),
+				pullout: {
+					isOpen: pulloutIsOpen,
+					setIsOpen: setPulloutIsOpen,
+				},
 				removeFromCart: (productId) => {
 					dispatch({
 						type: CartActionType.PRODUCT_REMOVE,
 						payload: productId,
 					});
 				},
+				costTotal,
 			}}
 		>
 			{children}

@@ -9,6 +9,10 @@ export const typography = {
 			desktop: "0.5rem",
 			mobile: "0.625rem",
 		},
+		complementary: {
+			desktop: "0.625rem",
+			mobile: "0.75rem",
+		},
 		labelSmall: {
 			desktop: "0.75rem",
 			mobile: "0.8125rem",

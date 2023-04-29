@@ -12,33 +12,33 @@ export const Button = styled.button<Omit<ButtonProps, "children">>(
 			padding: ${theme.space.small} ${theme.space.large};
 			overflow: hidden;
 			color: ${{
-				[Variant.Primary]: theme.colours.text.primary["100"],
-				[Variant.Secondary]: theme.colours.text.secondary["900"],
+				[Variant.Primary]: theme.colours.primary["100"],
+				[Variant.Secondary]: theme.colours.secondary["900"],
 			}[variant]};
 			background-color: ${{
-				[Variant.Primary]: theme.colours.text.primary["500"],
-				[Variant.Secondary]: theme.colours.text.secondary["200"],
+				[Variant.Primary]: theme.colours.primary["500"],
+				[Variant.Secondary]: theme.colours.secondary["200"],
 			}[variant]};
 			border-radius: ${theme.space.large};
 
 			${hover} {
 				&:hover {
 					background-color: ${{
-						[Variant.Primary]: theme.colours.text.primary["400"],
-						[Variant.Secondary]: theme.colours.text.secondary["400"],
+						[Variant.Primary]: theme.colours.primary["400"],
+						[Variant.Secondary]: theme.colours.secondary["400"],
 					}[variant]};
 				}
 			}
 
 			&:active {
 				background-color: ${{
-					[Variant.Primary]: theme.colours.text.primary["300"],
-					[Variant.Secondary]: theme.colours.text.secondary["300"],
+					[Variant.Primary]: theme.colours.primary["300"],
+					[Variant.Secondary]: theme.colours.secondary["300"],
 				}[variant]};
 			}
 
 			&:disabled {
-				color: ${theme.colours.text.secondary};
+				color: ${theme.colours.secondary};
 				background-color: ${theme.colours.background["300"]};
 				cursor: not-allowed;
 			}
@@ -51,8 +51,8 @@ export const Button = styled.button<Omit<ButtonProps, "children">>(
 				css`
 					box-shadow: ${`inset 0px 0px 0px 2px ${
 						{
-							[Variant.Primary]: theme.colours.text.primary["600"],
-							[Variant.Secondary]: theme.colours.text.secondary["600"],
+							[Variant.Primary]: theme.colours.primary["600"],
+							[Variant.Secondary]: theme.colours.secondary["600"],
 						}[variant]
 					}`};
 				`,

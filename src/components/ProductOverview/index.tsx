@@ -31,7 +31,6 @@ export const ProductOverview: FC<ProductOverviewProps> = ({
 	product,
 }) => {
 	const { description, media } = product;
-	console.log(description);
 	const { blocks } = JSON.parse(description);
 	const parsedBlocks = isBlocks(blocks) ? blocks : [];
 

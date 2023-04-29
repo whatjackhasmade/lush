@@ -49,7 +49,7 @@ export const GlobalStyle = createGlobalStyle(
 			overscroll-behavior: none;
 			overflow-x: hidden;
 			overflow-y: scroll;
-			color: ${theme.colours.text.default["900"]};
+			color: ${theme.colours.default["900"]};
 			font-size: ${theme.typography.baseFontSize};
 			text-rendering: optimizeLegibility;
 			background-color: ${theme.colours.background["000"]};
@@ -60,6 +60,7 @@ export const GlobalStyle = createGlobalStyle(
 		}
 
 		button {
+			background-color: transparent;
 			cursor: pointer;
 		}
 

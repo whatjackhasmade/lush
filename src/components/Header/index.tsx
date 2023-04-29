@@ -4,7 +4,7 @@ import { LanguagePicker } from "../LanguagePicker";
 import * as S from "./styles";
 import { useTranslation } from "next-i18next";
 import { Translation } from "lush/enums";
-import { Cart } from "../Cart";
+import { CartToggle } from "./CartToggle";
 
 export const Header: React.FC = () => {
 	const { t } = useTranslation(Translation.ComponentHeader);
@@ -42,7 +42,7 @@ export const Header: React.FC = () => {
 			</S.Navigation>
 			<S.Actions>
 				<LanguagePicker />
-				<Cart />
+				<CartToggle />
 			</S.Actions>
 		</S.Header>
 	);

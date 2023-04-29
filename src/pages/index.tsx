@@ -3,11 +3,13 @@ import { Filters, Metadata, Products } from "lush/components";
 import { GetServerSideProps } from "next";
 import { Translation } from "lush/enums";
 import { FiltersProvider } from "lush/context";
+import { FillMyCart } from "lush/components";
 
 export default function HomePage() {
 	return (
 		<>
 			<Metadata title="Home" />
+			<FillMyCart />
 			<FiltersProvider>
 				<Filters />
 				<Products />

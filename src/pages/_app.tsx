@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 import { ThemeProvider } from "styled-components";
 import { theme } from "lush/theme";
 import { GlobalStyle } from "lush/components";
+import { MotionConfig } from "framer-motion";
 
 const handwritten = localFont({ src: "../assets/fonts/handwritten.woff" });
 const inter = Inter({ subsets: ["latin"] });
@@ -21,14 +22,16 @@ function App({ Component, pageProps }: AppProps) {
 				}
 			`}</style>
 			<ThemeProvider theme={theme}>
-				<GlobalStyle />
-				<ApolloProvider pageProps={pageProps}>
-					<CartProvider>
-						<DefaultLayout>
-							<Component {...pageProps} />
-						</DefaultLayout>
-					</CartProvider>
-				</ApolloProvider>
+				<MotionConfig reducedMotion="user">
+					<GlobalStyle />
+					<ApolloProvider pageProps={pageProps}>
+						<CartProvider>
+							<DefaultLayout>
+								<Component {...pageProps} />
+							</DefaultLayout>
+						</CartProvider>
+					</ApolloProvider>
+				</MotionConfig>
 			</ThemeProvider>
 		</>
 	);

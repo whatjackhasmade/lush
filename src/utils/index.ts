@@ -1,4 +1,5 @@
 export * from "./deepMerge";
+export * from "./formatCurrency";
 export * from "./focus";
 export * from "./isEqual";
 export * from "./languageCodeFromLocale";
