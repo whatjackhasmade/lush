@@ -11,7 +11,7 @@ export interface IconProps
 	label?: string;
 }
 
-export function withIconWrapper(WrappedIcon: React.ComponentType) {
+function withIconWrapper(WrappedIcon: React.ComponentType) {
 	const WithIconWrapper = forwardRef<HTMLSpanElement, IconProps>(
 		({ label, ...props }, ref) => (
 			<S.Wrapper

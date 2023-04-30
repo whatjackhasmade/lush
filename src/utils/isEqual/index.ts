@@ -13,11 +13,6 @@ export function isEqual(value: any, other: any) {
 		return value === other;
 	}
 
-	// If the value is a function, compare the function code
-	if (type === "[object Function]") {
-		return value.toString() === other.toString();
-	}
-
 	// If the value is an array, compare the arrays recursively
 	if (type === "[object Array]") {
 		if (value.length !== other.length) return false;

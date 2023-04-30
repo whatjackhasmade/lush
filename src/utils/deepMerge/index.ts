@@ -30,6 +30,4 @@ export function deepMerge(
 
 		return merged;
 	}
-
-	return source;
 }

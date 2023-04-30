@@ -5,17 +5,19 @@ import { StaticImageData } from "next/image";
 import { Title } from "lush/components/Title";
 
 interface HeroProps {
-	image: StaticImageData;
+	image?: StaticImageData;
 	title: string;
 }
 
 export const Hero: FC<HeroProps> = ({ image, title }) => (
 	<S.Hero>
-		<S.Contents>
-			<Title colourKey="white" family="inter" size="displayXLarge">
-				{title}
-			</Title>
-		</S.Contents>
-		<Image src={image} alt="" />
+		{title && (
+			<S.Contents>
+				<Title colourKey="white" family="inter" size="displayXLarge">
+					{title}
+				</Title>
+			</S.Contents>
+		)}
+		{image && <Image src={image} alt="" />}
 	</S.Hero>
 );
