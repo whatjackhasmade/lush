@@ -15,7 +15,7 @@ type TApolloClient = ApolloClient<NormalizedCacheObject> | undefined;
 
 let apolloClient: TApolloClient;
 
-function initializeApollo(initialState: any = null) {
+function initializeApollo(initialState: NormalizedCacheObject) {
 	const client =
 		apolloClient ??
 		new ApolloClient({
@@ -38,7 +38,7 @@ function initializeApollo(initialState: any = null) {
 		const data = deepMerge(existingCache, initialState);
 
 		// Restore the cache with the merged data
-		client.cache.restore(data);
+		if (data) client.cache.restore(data);
 	}
 	// For SSG and SSR always create a new Apollo Client
 	if (typeof window === "undefined") return client;

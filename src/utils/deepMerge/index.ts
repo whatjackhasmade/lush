@@ -1,33 +1,28 @@
-export function deepMerge(
-	target: any[] | Record<string, any>,
-	source: any[] | Record<string, any>
-) {
-	if (Array.isArray(target) && Array.isArray(source)) {
-		return target.concat(source);
-	}
+type Merge<T, U> = T extends object
+	? U extends object
+		? T & U
+		: never
+	: T | U;
 
-	if (
+export function deepMerge<T, U>(target: T, source: U): Merge<T, U> {
+	if (Array.isArray(target) && Array.isArray(source)) {
+		return [...target, ...source] as Merge<T, U>;
+	} else if (
 		typeof target === "object" &&
-		typeof source === "object" &&
 		target !== null &&
+		typeof source === "object" &&
 		source !== null
 	) {
-		const merged = {};
-
-		for (const key of Object.keys(target)) {
-			if (source.hasOwnProperty(key)) {
-				merged[key] = deepMerge(target[key], source[key]);
-			} else {
-				merged[key] = target[key];
-			}
-		}
-
-		for (const key of Object.keys(source)) {
-			if (!merged.hasOwnProperty(key)) {
-				merged[key] = source[key];
-			}
-		}
-
-		return merged;
+		const result = { ...target } as Record<string, any>;
+		const sourceAsObject = source as Record<string, any>;
+		Object.keys(source).forEach((key) => {
+			result[key] =
+				key in target
+					? deepMerge(result[key], sourceAsObject[key])
+					: sourceAsObject[key];
+		});
+		return result as Merge<T, U>;
+	} else {
+		return source as Merge<T, U>;
 	}
 }
