@@ -44,6 +44,7 @@ const mocks: MockedResponse[] = [
 ];
 
 describe("Products", () => {
+	// TODO
 	it("should render correctly", () => {
 		const { container } = renderWithTheme(
 			<MockedProvider mocks={mocks}>

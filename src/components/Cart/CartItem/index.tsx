@@ -10,7 +10,9 @@ import { Icon, Text, Title, VisuallyHidden } from "lush/components";
 import { formatCurrency } from "lush/utils";
 import Link from "next/link";
 
-export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
+export type CartItemProps = CartItemType;
+
+export const CartItem: FC<CartItemProps> = ({ product, quantity }) => {
 	const { isAvailableForPurchase, slug, thumbnail } = product;
 	const { quantitySet, removeFromCart, pullout } = useCart();
 	const { t } = useTranslation(Translation.Common);
@@ -43,7 +45,13 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 					</Link>
 					<Text>{product.category?.name}</Text>
 				</S.Details>
-				<S.Remove onClick={() => removeFromCart(product.id)} type="button">
+				<S.Remove
+					onClick={(event) => {
+						event.preventDefault();
+						removeFromCart(product.id);
+					}}
+					type="button"
+				>
 					<Icon.Trash />
 					<VisuallyHidden>{t("remove")}</VisuallyHidden>
 				</S.Remove>
@@ -51,7 +59,8 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 			<S.Controls>
 				<S.Quantity>
 					<S.QuantityUpdate
-						onClick={() => {
+						onClick={(event) => {
+							event.preventDefault();
 							quantitySet({
 								productId: product.id,
 								quantity: quantity - 1,
@@ -61,7 +70,15 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 						<VisuallyHidden>{t("quantityDecrease")}</VisuallyHidden>
 						<span aria-hidden>-</span>
 					</S.QuantityUpdate>
+					{/* https://technology.blog.gov.uk/2020/02/24/why-the-gov-uk-design-system-team-changed-the-input-type-for-numbers/ */}
+					<VisuallyHidden>
+						<label htmlFor="quantity">{t("quantity")}</label>
+					</VisuallyHidden>
 					<S.Input
+						id="quantity"
+						name="quantity"
+						inputMode="numeric"
+						pattern="[0-9]*"
 						onKeyDown={(event) => {
 							switch (event.key) {
 								case "ArrowUp": {
@@ -95,7 +112,8 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 						value={quantity}
 					/>
 					<S.QuantityUpdate
-						onClick={() => {
+						onClick={(event) => {
+							event.preventDefault();
 							quantitySet({
 								productId: product.id,
 								quantity: quantity + 1,
@@ -126,7 +144,7 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 						>
 							{t("cart.inStock")}
 						</Text>
-						<Text>{t("onlineDelivery")}</Text>
+						<Text>{t("cart.onlineDelivery")}</Text>
 					</>
 				) : (
 					<>
@@ -141,7 +159,7 @@ export const CartItem: FC<CartItemType> = ({ product, quantity }) => {
 						>
 							{t("cart.outOfStock")}
 						</Text>
-						<Text>{t("restockSoon")}</Text>
+						<Text>{t("cart.restockSoon")}</Text>
 					</>
 				)}
 			</S.Availability>

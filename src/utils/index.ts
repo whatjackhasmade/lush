@@ -6,3 +6,4 @@ export * from "./languageCodeFromLocale";
 export * from "./mapFontSize";
 export * from "./mapMargin";
 export * from "./media";
+export * from "./wait";

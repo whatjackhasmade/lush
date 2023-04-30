@@ -1,10 +1,10 @@
 import { Fragment, FC } from "react";
+import { useTranslation } from "next-i18next";
 
 import * as S from "./styles";
-import { useFilters } from "lush/hooks/useFilters";
+import { useFilters } from "lush/hooks";
 import { useCategoriesQuery } from "lush/schema";
 import { Error, Skeleton, Title } from "lush/components";
-import { useTranslation } from "next-i18next";
 import { Translation } from "lush/enums";
 
 export const Filters: FC = () => {
@@ -18,15 +18,19 @@ export const Filters: FC = () => {
 	});
 
 	const categories = data?.categories?.edges?.map(({ node }) => node) ?? [];
+
 	const isLoading = !data && loading;
 
 	return (
 		<S.Filters>
+			<S.Header>
+				<Title family="inter">{t("filters.title")}</Title>
+			</S.Header>
 			{error && <Error>{t("error.generic")}</Error>}
-			<>
-				<S.Header>
-					<Title family="inter">{t("filters.title")}</Title>
-				</S.Header>
+			{!loading && !error && !categories.length && (
+				<Error>{t("error.noCategories")}</Error>
+			)}
+			{(isLoading || !!categories.length) && (
 				<S.Categories>
 					{isLoading &&
 						Array.from({ length: 36 }).map((_, index) => (
@@ -37,7 +41,7 @@ export const Filters: FC = () => {
 							/>
 						))}
 					{!isLoading &&
-						categories?.map((category) => {
+						categories.map((category) => {
 							const isActive = activeCategories.some(
 								(activeCategory) => activeCategory.id === category.id
 							);
@@ -64,7 +68,7 @@ export const Filters: FC = () => {
 							);
 						})}
 				</S.Categories>
-			</>
+			)}
 		</S.Filters>
 	);
 };

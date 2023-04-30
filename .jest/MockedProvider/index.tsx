@@ -7,5 +7,9 @@ export const MockedProvider: React.FC<{
 	children: React.ReactNode;
 	mocks?: MockedProviderProps["mocks"];
 }> = ({ children, mocks }) => {
-	return <MockedApolloProvider mocks={mocks}>{children}</MockedApolloProvider>;
+	return (
+		<MockedApolloProvider mocks={mocks} addTypename={false}>
+			{children}
+		</MockedApolloProvider>
+	);
 };

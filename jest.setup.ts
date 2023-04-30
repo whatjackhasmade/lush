@@ -8,6 +8,7 @@ jest.mock("next-i18next", () => ({
 	useTranslation: () => ({ t: (key: any) => key }),
 }));
 
+// TODO: Remove the need for this
 jest.mock("next/dist/shared/lib/router-context.js", () => ({
 	RouterContext: createContext(true),
 }));
