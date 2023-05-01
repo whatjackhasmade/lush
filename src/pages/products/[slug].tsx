@@ -5,12 +5,14 @@ import { Translation } from "lush/enums";
 import { Error, Metadata, ProductOverview } from "lush/components";
 import { useProductQuery } from "lush/schema";
 import { languageCodeFromLocale } from "lush/utils";
+import { useTranslation } from "next-i18next";
 
 type Query = {
 	slug?: string;
 };
 
 export default function ProductPage() {
+	const { t } = useTranslation(Translation.PageProduct);
 	const { locale, query } = useRouter();
 	const { slug = "" } = (query ?? {}) as Query;
 	const language = languageCodeFromLocale(locale);
@@ -28,12 +30,11 @@ export default function ProductPage() {
 	return (
 		<>
 			<Metadata
-				title={product?.seoTitle || product?.name || "Product"}
+				title={product?.seoTitle || product?.name || t("seo.title")}
 				description={product?.seoDescription}
 			/>
-			{error && <Error>Sorry, it looks like something went wrong</Error>}
-			{product && <ProductOverview product={product} loading={loading} />}
-			<pre>{JSON.stringify(data, null, 4)}</pre>
+			{error && <Error>{t(`${Translation.Common}:error.generic`)}</Error>}
+			<ProductOverview product={product} loading={loading} />
 		</>
 	);
 }
@@ -43,7 +44,10 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 
 	try {
 		return {
-			props: await serverSideTranslations(locale, [Translation.Common]),
+			props: await serverSideTranslations(locale, [
+				Translation.Common,
+				Translation.PageProduct,
+			]),
 		};
 	} catch (error) {
 		return { notFound: true };

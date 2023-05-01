@@ -7,6 +7,7 @@ interface TitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
 	colourKey?: keyof DefaultTheme["colours"];
 	family?: keyof DefaultTheme["typography"]["fontFamily"];
 	margin?: Parameters<typeof mapMargin>[0];
+	noWrap?: boolean;
 	size?: keyof DefaultTheme["typography"]["fontSize"];
 	weight?: keyof DefaultTheme["typography"]["fontWeight"];
 }
@@ -16,7 +17,8 @@ export const Title = styled.h2<TitleProps>(
 		colourKey,
 		family,
 		margin,
-		size,
+		noWrap,
+		size = "default",
 		weight,
 		theme: {
 			colours,
@@ -27,6 +29,8 @@ export const Title = styled.h2<TitleProps>(
 		${mapFontSize(size)};
 		font-family: ${fontFamily[family ?? "handwritten"]};
 		font-weight: ${fontWeight[weight ?? "medium"]};
+		margin: 0;
 		${mapMargin(margin)};
+		${noWrap && `white-space: nowrap;`};
 	`
 );

@@ -67,6 +67,10 @@ export const GlobalStyle = createGlobalStyle(
 		button {
 			background-color: transparent;
 			cursor: pointer;
+
+			&[disabled] {
+				cursor: not-allowed;
+			}
 		}
 
 		img {

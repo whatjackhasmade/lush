@@ -70,4 +70,23 @@ fragment Product on Product {
 		name
 		description
 	}
+	attributes {
+		attribute {
+			id
+			name
+			slug
+		}
+		values {
+			id
+			name
+			slug
+			value
+			inputType
+			plainText
+			richText
+			boolean
+			date
+			dateTime
+		}
+	}
 }

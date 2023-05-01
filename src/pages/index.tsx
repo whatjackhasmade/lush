@@ -23,7 +23,7 @@ export default function HomePage() {
 			<Hero image={hero} title={t("hero.title")} />
 			<FiltersProvider>
 				<VisuallyHidden>
-					<a href="#products">Skip to products</a>
+					<a href="#products">{t("hero.skipToProducts")}</a>
 				</VisuallyHidden>
 				<Space
 					margin={{

@@ -18,6 +18,21 @@ export const CartItem: FC<CartItemProps> = ({ product, quantity }) => {
 	const { t } = useTranslation(Translation.Common);
 	const gross = product?.pricing?.priceRange?.stop?.gross;
 
+	const updateQuantity = (newQuantity: number) => {
+		if (newQuantity < 1) {
+			quantitySet({
+				productId: product.id,
+				quantity: 1,
+			});
+			return;
+		}
+
+		quantitySet({
+			productId: product.id,
+			quantity: newQuantity,
+		});
+	};
+
 	return (
 		<S.Item key={product.id}>
 			<S.Header>
@@ -59,12 +74,10 @@ export const CartItem: FC<CartItemProps> = ({ product, quantity }) => {
 			<S.Controls>
 				<S.Quantity>
 					<S.QuantityUpdate
+						disabled={quantity <= 1}
 						onClick={(event) => {
 							event.preventDefault();
-							quantitySet({
-								productId: product.id,
-								quantity: quantity - 1,
-							});
+							updateQuantity(quantity - 1);
 						}}
 					>
 						<VisuallyHidden>{t("quantityDecrease")}</VisuallyHidden>
@@ -82,19 +95,11 @@ export const CartItem: FC<CartItemProps> = ({ product, quantity }) => {
 						onKeyDown={(event) => {
 							switch (event.key) {
 								case "ArrowUp": {
-									quantitySet({
-										productId: product.id,
-										quantity: quantity + 1,
-									});
-
+									updateQuantity(quantity + 1);
 									break;
 								}
 								case "ArrowDown": {
-									quantitySet({
-										productId: product.id,
-										quantity: quantity - 1,
-									});
-
+									updateQuantity(quantity - 1);
 									break;
 								}
 								default: {
@@ -103,10 +108,7 @@ export const CartItem: FC<CartItemProps> = ({ product, quantity }) => {
 							}
 						}}
 						onChange={(event) => {
-							quantitySet({
-								productId: product.id,
-								quantity: +event.target.value,
-							});
+							updateQuantity(+event.target.value);
 						}}
 						type="text"
 						value={quantity}
@@ -114,10 +116,7 @@ export const CartItem: FC<CartItemProps> = ({ product, quantity }) => {
 					<S.QuantityUpdate
 						onClick={(event) => {
 							event.preventDefault();
-							quantitySet({
-								productId: product.id,
-								quantity: quantity + 1,
-							});
+							updateQuantity(quantity + 1);
 						}}
 					>
 						<VisuallyHidden>{t("quantityIncrease")}</VisuallyHidden>

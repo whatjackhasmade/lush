@@ -27,6 +27,7 @@ describe("AddToCart", () => {
 		loading: false,
 		product: {
 			id: "1",
+			attributes: [],
 			created: "2021-01-01T00:00:00.000Z",
 			updatedAt: "2021-02-01T00:00:00.000Z",
 			metadata: [],

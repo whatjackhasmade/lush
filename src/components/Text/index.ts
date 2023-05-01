@@ -2,12 +2,14 @@ import styled, { css } from "styled-components";
 import type { DefaultTheme } from "styled-components";
 import { mapMargin } from "lush/utils";
 import { mapFontSize } from "lush/utils/mapFontSize";
+import { Property } from "csstype";
 
-interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
+export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
 	colourKey?: keyof DefaultTheme["colours"];
 	isBold?: boolean;
 	margin?: Parameters<typeof mapMargin>[0];
 	size?: keyof DefaultTheme["typography"]["fontSize"];
+	textTransform?: Property.TextTransform;
 	weight?: keyof DefaultTheme["typography"]["fontWeight"];
 }
 
@@ -17,6 +19,7 @@ export const Text = styled.p<TextProps>(
 		isBold,
 		margin,
 		size,
+		textTransform,
 		weight,
 		theme: {
 			colours,
@@ -28,5 +31,6 @@ export const Text = styled.p<TextProps>(
 		font-weight: ${isBold && fontWeight.bold};
 		font-weight: ${weight && fontWeight[weight]};
 		${mapMargin(margin)};
+		text-transform: ${textTransform};
 	`
 );

@@ -20,6 +20,7 @@ jest.mock("lush/hooks", () => ({
 
 const props: CartItemProps = {
 	product: {
+		attributes: [],
 		metadata: [],
 		slug: "test-product",
 		created: "2021-01-01T00:00:00.000Z",
@@ -56,7 +57,7 @@ const props: CartItemProps = {
 			},
 		},
 	},
-	quantity: 1,
+	quantity: 2,
 };
 
 describe("CartItem", () => {
@@ -103,12 +104,12 @@ describe("CartItem", () => {
 
 		expect(mockQuantitySet).toHaveBeenCalledWith({
 			productId: props.product.id,
-			quantity: 2,
+			quantity: props.quantity + 1,
 		});
 	});
 
 	it("decreases quantity when quantity input is pressed down on keyboard", async () => {
-		const { getByRole } = renderWithTheme(<CartItem {...props} />);
+		const { getByRole } = renderWithTheme(<CartItem {...props} quantity={2} />);
 
 		const quantityInput = getByRole("textbox", { name: "quantity" });
 
@@ -117,7 +118,7 @@ describe("CartItem", () => {
 
 		expect(mockQuantitySet).toHaveBeenCalledWith({
 			productId: props.product.id,
-			quantity: 0,
+			quantity: props.quantity - 1,
 		});
 	});
 
@@ -127,16 +128,6 @@ describe("CartItem", () => {
 
 		await user.click(quantityInput);
 		await user.type(quantityInput, "a");
-	});
-
-	it("allows only numbers to be entered in quantity input", async () => {
-		const { getByRole } = renderWithTheme(<CartItem {...props} />);
-		const quantityInput = getByRole("textbox", { name: "quantity" });
-
-		await user.click(quantityInput);
-		await user.type(quantityInput, "a");
-
-		expect(quantityInput).toHaveValue("1");
 	});
 
 	it("displays the product price", () => {

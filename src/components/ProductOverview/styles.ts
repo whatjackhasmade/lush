@@ -1,32 +1,29 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+import { above } from "lush/utils";
 
-export const ImageFeatured = styled.img`
-	max-width: 200px;
-`;
+export const Layout = styled.div(
+	({ theme }) => css`
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		gap: ${theme.space.xLarge};
+		padding-bottom: ${theme.space.xxxxLarge};
 
-export const Gallery = styled.div`
-	display: flex;
-	gap: 1rem;
-	height: 400px;
-`;
+		${above.mobileLarge} {
+			flex-direction: row-reverse;
+			gap: ${theme.space.xxLarge};
+		}
 
-export const GalleryItem = styled.div`
-	position: relative;
-	height: 100%;
-	width: 200px;
+		${above.tabletPortrait} {
+			gap: ${theme.space.xxxxLarge};
+		}
+	`
+);
 
-	img {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
-`;
+export const Left = styled.div(
+	() => css`
+		min-width: 0;
+	`
+);
 
-export const Header = styled.div`
-	display: flex;
-	flex-direction: row-reverse;
-	justify-content: space-between;
-`;
+export const Right = styled.div(() => css``);

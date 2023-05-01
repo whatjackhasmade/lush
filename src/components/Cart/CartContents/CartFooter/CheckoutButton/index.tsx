@@ -18,7 +18,7 @@ export const CheckoutButton: FC = () => {
 				window.alert(
 					"In the real world, this would take you to the checkout page."
 				);
-		}, 1500);
+		}, 1000);
 
 		return () => {
 			clearTimeout(timeoutId);

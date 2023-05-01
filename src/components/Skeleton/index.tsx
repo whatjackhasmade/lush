@@ -1,5 +1,6 @@
 import { Property } from "csstype";
 import styled, { css, keyframes } from "styled-components";
+import { mapMargin } from "lush/utils";
 
 // Define a keyframe animation for the skeleton's shimmer effect
 const shimmer = keyframes`
@@ -14,11 +15,12 @@ const shimmer = keyframes`
 interface SkeletonProps {
 	borderRadius?: Property.BorderRadius;
 	height?: Property.Height;
+	margin?: Parameters<typeof mapMargin>[0];
 	width?: Property.Width;
 }
 
 export const Skeleton = styled.div<SkeletonProps>(
-	({ borderRadius, height = "100%", width = "100%" }) => css`
+	({ borderRadius, height = "1.5rem", margin, width = "100%" }) => css`
 		background: #f6f7f8;
 		background-image: linear-gradient(
 			to right,
@@ -35,5 +37,6 @@ export const Skeleton = styled.div<SkeletonProps>(
 		width: ${width};
 		height: ${height};
 		animation: ${shimmer} 1s ease-in-out infinite;
+		${mapMargin(margin)};
 	`
 );

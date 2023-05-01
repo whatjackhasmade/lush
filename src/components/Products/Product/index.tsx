@@ -91,12 +91,14 @@ export const Product: FC<ProductProps> = ({ product, isLoading }) => {
 				</S.Info>
 			</Link>
 			<S.View
+				type="button"
 				onClick={(event) => {
-					if (!product) return;
-
 					event.preventDefault();
-					addToCart(product);
-					setShowAddedMessage(true);
+
+					if (product) {
+						addToCart(product);
+						setShowAddedMessage(true);
+					}
 				}}
 			>
 				{showAddedMessage

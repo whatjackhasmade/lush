@@ -1,4 +1,5 @@
 export * from "./AddToCart";
+export * from "./Blocks";
 export * from "./Button";
 export * from "./Cart";
 export * from "./Container";

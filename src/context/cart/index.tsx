@@ -16,7 +16,10 @@ enum CartActionType {
 type CartAction =
 	| {
 			type: CartActionType.PRODUCT_ADD;
-			payload: ProductFragment;
+			payload: {
+				product: ProductFragment;
+				quantity?: number;
+			};
 	  }
 	| {
 			type: CartActionType.PRODUCT_REMOVE;
@@ -38,16 +41,19 @@ export interface CartItem {
 const cartReducer = (state: CartItem[], action: CartAction) => {
 	switch (action.type) {
 		case CartActionType.PRODUCT_ADD: {
+			const { product, quantity } = action.payload;
+			const newQuantity = quantity ?? 1;
+
 			const existingItem = state.find(
-				(cartItem) => cartItem.product.id === action.payload.id
+				(cartItem) => cartItem.product.id === product.id
 			);
 
 			if (existingItem) {
 				return state.map((cartItem) =>
-					cartItem.product.id === action.payload.id
+					cartItem.product.id === product.id
 						? {
 								...cartItem,
-								quantity: cartItem.quantity + 1,
+								quantity: cartItem.quantity + newQuantity,
 						  }
 						: cartItem
 				);
@@ -56,8 +62,8 @@ const cartReducer = (state: CartItem[], action: CartAction) => {
 			return [
 				...state,
 				{
-					quantity: 1,
-					product: action.payload,
+					quantity: newQuantity,
+					product,
 				},
 			];
 		}
@@ -83,7 +89,7 @@ const cartReducer = (state: CartItem[], action: CartAction) => {
 };
 
 export interface CartContextState {
-	addToCart: (product: ProductFragment) => void;
+	addToCart: (product: ProductFragment, quantity?: number) => void;
 	cart: CartItem[];
 	count: number;
 	costTotalRequiredForFreeDelivery: number;
@@ -154,10 +160,13 @@ const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 	return (
 		<CartContext.Provider
 			value={{
-				addToCart: (product) => {
+				addToCart: (product, quantity) => {
 					dispatch({
 						type: CartActionType.PRODUCT_ADD,
-						payload: product,
+						payload: {
+							product,
+							quantity,
+						},
 					});
 				},
 				cart,
