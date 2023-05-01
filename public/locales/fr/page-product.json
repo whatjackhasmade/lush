@@ -3,5 +3,8 @@
 		"title": "Produit"
 	},
 	"addToBag": "Ajouter au panier",
-	"added": "Ajouté au panier"
+	"added": "Ajouté au panier",
+	"quantityDecrease": "Diminuer la quantité",
+	"quantityIncrease": "Augmenter la quantité",
+	"quantity": "Quantité"
 }

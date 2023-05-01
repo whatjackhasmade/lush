@@ -11,11 +11,13 @@ export const Header = styled.div(
 
 export const Filters = styled.div``;
 
-export const Categories = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	gap: 0.5rem 1rem;
-`;
+export const Categories = styled.div(
+	({ theme }) => css`
+		display: flex;
+		flex-wrap: wrap;
+		gap: ${theme.space.xSmall} ${theme.space.regular};
+	`
+);
 
 export const Input = styled.input(
 	({ theme }) => css`
@@ -43,8 +45,12 @@ export const Category = styled.label<{
 		display: inline-block;
 		border: 2px solid transparent;
 		cursor: pointer;
-		border-radius: 50px;
+		border-radius: ${theme.space.xxxLarge};
 		padding: ${theme.space.xSmall} ${theme.space.regular};
+
+		&:hover {
+			border-color: ${theme.colours.primary["400"]};
+		}
 
 		${isActive &&
 		css`

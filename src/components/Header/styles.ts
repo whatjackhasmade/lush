@@ -8,6 +8,11 @@ export const Header = styled.header`
 
 	a {
 		color: inherit;
+		text-decoration: underline;
+
+		&:hover {
+			text-decoration: none;
+		}
 	}
 `;
 

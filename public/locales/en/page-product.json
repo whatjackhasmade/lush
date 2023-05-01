@@ -3,5 +3,8 @@
 		"title": "Product"
 	},
 	"addToBag": "Add to bag",
-	"added": "Added to cart"
+	"added": "Added to cart",
+	"quantityDecrease": "Decrease quantity",
+	"quantityIncrease": "Increase quantity",
+	"quantity": "Quantity"
 }

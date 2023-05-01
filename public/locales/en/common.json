@@ -1,4 +1,5 @@
 {
+	"skipToContent": "Skip to content",
 	"header": {
 		"title": "LUSH",
 		"navigation": {
@@ -12,6 +13,7 @@
 		"addAnother": "Add another"
 	},
 	"hero": {
+		"skipToProducts": "Skip to products",
 		"title": "LUSH Cosmetics"
 	},
 	"error": {
@@ -45,6 +47,7 @@
 		"onlineDelivery": "For online delivery"
 	},
 	"language": {
+		"label": "Select a language",
 		"en": "English",
 		"fr": "Français"
 	}

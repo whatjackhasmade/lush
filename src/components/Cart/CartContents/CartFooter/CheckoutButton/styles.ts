@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components";
-import { hover } from "lush/utils";
 
 export const Button = styled.button(
 	({ theme }) => css`
@@ -10,10 +9,8 @@ export const Button = styled.button(
 		color: ${theme.colours.default["000"]};
 		transition: background-color 0.2s ease;
 
-		${hover} {
-			&:hover {
-				background-color: ${theme.colours.background["900"]};
-			}
+		&:hover {
+			background-color: ${theme.colours.background["900"]};
 		}
 
 		&:active {

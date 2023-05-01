@@ -3,7 +3,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useTranslation } from "next-i18next";
 
 import { ErrorHero, Metadata } from "lush/components";
-import { Translation } from "lush/enums";
+import { Pathname, Translation } from "lush/enums";
+import Link from "next/link";
 
 const NotFoundPage: NextPage = () => {
 	const { t } = useTranslation(Translation.PageNotFound);
@@ -11,7 +12,9 @@ const NotFoundPage: NextPage = () => {
 	return (
 		<>
 			<Metadata title={t("metadata.title")} />
-			<ErrorHero description={t("description")} title={t("title")} />
+			<ErrorHero description={t("description")} title={t("title")}>
+				<Link href={Pathname.Index}>{t("returnToHome")}</Link>
+			</ErrorHero>
 		</>
 	);
 };

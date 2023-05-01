@@ -1,8 +1,9 @@
 {
+	"skipToContent": "Passer au contenu",
 	"header": {
 		"title": "LUSH",
 		"navigation": {
-			"index": "Page d'accueil",
+			"index": "Accueil",
 			"products": "Produits"
 		}
 	},
@@ -12,10 +13,11 @@
 		"addAnother": "Ajouter un autre"
 	},
 	"hero": {
-		"title": "LUSH Cosmétiques"
+		"skipToProducts": "Passer aux produits",
+		"title": "LUSH Cosmetics"
 	},
 	"error": {
-		"generic": "Désolé, il semble que quelque chose ne va pas"
+		"generic": "Désolé, il semble que quelque chose ait mal tourné"
 	},
 	"filters": {
 		"clear": "Effacer toutes les catégories",
@@ -30,20 +32,22 @@
 		}
 	},
 	"cart": {
-		"checkout": "Passer à la caisse",
+		"checkout": "Commander",
 		"title": "Panier ({{count}})",
 		"close": "Fermer le panier",
 		"empty": {
 			"title": "Votre sac est vide",
-			"body": "C'est le moment idéal pour commencer vos achats !"
+			"body": "Il semble que c'est le bon moment pour faire du shopping!"
 		},
-		"deliveryFree": "Votre commande est éligible à la livraison standard GRATUITE au Royaume-Uni !",
-		"deliveryNotFree": "Vous y êtes presque ! Ajoutez {{amount}} pour bénéficier de la livraison standard GRATUITE au Royaume-Uni.",
+		"deliveryFree": "Votre commande bénéficie de la livraison standard GRATUITE au Royaume-Uni !",
+		"deliveryNotFree": "Presque là! Dépensez plus pour bénéficier de la livraison standard GRATUITE au Royaume-Uni.",
+		"deliveryNotFreeAmount": "Presque là ! Dépensez encore {{amount}} pour bénéficier de la livraison standard GRATUITE au Royaume-Uni.",
 		"total": "Total",
 		"inStock": "En stock",
-		"onlineDelivery": "Pour une livraison en ligne"
+		"onlineDelivery": "Pour livraison en ligne"
 	},
 	"language": {
+		"label": "Sélectionner une langue",
 		"en": "Anglais",
 		"fr": "Français"
 	}

@@ -1,11 +1,12 @@
 import { useRouter } from "next/dist/client/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSideProps } from "next";
-import { Translation } from "lush/enums";
+import { Pathname, Translation } from "lush/enums";
 import { Error, Metadata, ProductOverview } from "lush/components";
 import { useProductQuery } from "lush/schema";
 import { languageCodeFromLocale } from "lush/utils";
 import { useTranslation } from "next-i18next";
+import { useEffect } from "react";
 
 type Query = {
 	slug?: string;
@@ -13,7 +14,7 @@ type Query = {
 
 export default function ProductPage() {
 	const { t } = useTranslation(Translation.PageProduct);
-	const { locale, query } = useRouter();
+	const { locale, query, push } = useRouter();
 	const { slug = "" } = (query ?? {}) as Query;
 	const language = languageCodeFromLocale(locale);
 
@@ -26,6 +27,11 @@ export default function ProductPage() {
 	});
 
 	const { product } = data ?? {};
+	const productNotFound = !product && !loading;
+
+	useEffect(() => {
+		if (productNotFound) push(Pathname.NotFound);
+	}, [push, productNotFound]);
 
 	return (
 		<>
