@@ -1,5 +1,7 @@
 {
 	"seo": {
 		"title": "Product"
-	}
+	},
+	"addToBag": "Add to bag",
+	"added": "Added to cart"
 }

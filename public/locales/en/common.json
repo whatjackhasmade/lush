@@ -30,6 +30,7 @@
 		}
 	},
 	"cart": {
+		"checkout": "Checkout",
 		"title": "Cart ({{count}})",
 		"close": "Close cart",
 		"empty": {

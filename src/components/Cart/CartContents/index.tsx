@@ -53,6 +53,7 @@ export const CartContents: FC = () => {
 									{t("cart.empty.title")}
 								</Title>
 								<Text
+									align="center"
 									margin={{
 										bottom: "large",
 										top: "regular",

@@ -30,6 +30,7 @@
 		}
 	},
 	"cart": {
+		"checkout": "Passer à la caisse",
 		"title": "Panier ({{count}})",
 		"close": "Fermer le panier",
 		"empty": {

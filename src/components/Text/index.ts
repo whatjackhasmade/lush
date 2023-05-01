@@ -5,6 +5,7 @@ import { mapFontSize } from "lush/utils/mapFontSize";
 import { Property } from "csstype";
 
 export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
+	align?: Property.TextAlign;
 	colourKey?: keyof DefaultTheme["colours"];
 	isBold?: boolean;
 	margin?: Parameters<typeof mapMargin>[0];
@@ -15,6 +16,7 @@ export interface TextProps extends React.HTMLAttributes<HTMLParagraphElement> {
 
 export const Text = styled.p<TextProps>(
 	({
+		align,
 		colourKey,
 		isBold,
 		margin,
@@ -26,6 +28,7 @@ export const Text = styled.p<TextProps>(
 			typography: { fontWeight },
 		},
 	}) => css`
+		text-align: ${align};
 		color: ${colourKey && colours[colourKey]["600"]};
 		${mapFontSize(size)};
 		font-weight: ${isBold && fontWeight.bold};

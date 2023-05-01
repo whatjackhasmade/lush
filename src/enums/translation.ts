@@ -1,6 +1,6 @@
 export enum Translation {
 	Common = "common",
-	PageProduct = "PageProduct",
-	PageNotFound = "PageNotFound",
-	PageError = "PageError",
+	PageProduct = "page-product",
+	PageNotFound = "page-not-found",
+	PageError = "page-error",
 }
