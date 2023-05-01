@@ -1,37 +1,23 @@
-import { useRouter } from "next/dist/client/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { GetServerSideProps } from "next";
-import { Pathname, Translation } from "lush/enums";
+import { Translation } from "lush/enums";
 import { Error, Metadata, ProductOverview } from "lush/components";
-import { useProductQuery } from "lush/schema";
-import { languageCodeFromLocale } from "lush/utils";
+import {
+	LanguageCodeEnum,
+	ProductDocument,
+	ProductFragment,
+} from "lush/schema";
 import { useTranslation } from "next-i18next";
-import { useEffect } from "react";
+import { initializeApollo } from "lush/clients/apollo";
 
-type Query = {
-	slug?: string;
-};
-
-export default function ProductPage() {
+export default function ProductPage({
+	error,
+	product,
+}: {
+	error?: string;
+	product: ProductFragment;
+}) {
 	const { t } = useTranslation(Translation.PageProduct);
-	const { locale, query, push } = useRouter();
-	const { slug = "" } = (query ?? {}) as Query;
-	const language = languageCodeFromLocale(locale);
-
-	const { data, error, loading } = useProductQuery({
-		variables: {
-			channel: "uk",
-			language,
-			slug,
-		},
-	});
-
-	const { product } = data ?? {};
-	const productNotFound = !product && !loading;
-
-	useEffect(() => {
-		if (productNotFound) push(Pathname.NotFound);
-	}, [push, productNotFound]);
 
 	return (
 		<>
@@ -40,22 +26,40 @@ export default function ProductPage() {
 				description={product?.seoDescription}
 			/>
 			{error && <Error>{t(`${Translation.Common}:error.generic`)}</Error>}
-			<ProductOverview product={product} loading={loading} />
+			<ProductOverview product={product} />
 		</>
 	);
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-	if (!locale) return { notFound: true };
+export const getServerSideProps: GetServerSideProps = async ({
+	locale,
+	params,
+}) => {
+	if (!locale || !params?.slug) return { notFound: true };
+
+	const apolloClient = initializeApollo();
+
+	const { data, error } = await apolloClient.query({
+		query: ProductDocument,
+		variables: {
+			channel: "uk",
+			language: LanguageCodeEnum.EN,
+			slug: params.slug,
+		},
+	});
 
 	try {
 		return {
-			props: await serverSideTranslations(locale, [
-				Translation.Common,
-				Translation.PageProduct,
-			]),
+			props: {
+				...(await serverSideTranslations(locale, [
+					Translation.Common,
+					Translation.PageProduct,
+				])),
+				product: data?.product,
+				...(error && { error: error?.message }),
+			},
 		};
-	} catch (error) {
+	} catch (translationError) {
 		return { notFound: true };
 	}
 };

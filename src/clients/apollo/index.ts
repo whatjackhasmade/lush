@@ -15,7 +15,7 @@ type TApolloClient = ApolloClient<NormalizedCacheObject> | undefined;
 
 let apolloClient: TApolloClient;
 
-function initializeApollo(initialState: NormalizedCacheObject) {
+export function initializeApollo(initialState?: NormalizedCacheObject) {
 	const client =
 		apolloClient ??
 		new ApolloClient({
