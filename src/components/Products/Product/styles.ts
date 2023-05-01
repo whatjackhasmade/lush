@@ -10,7 +10,7 @@ export const Product = styled.article(
 		transition: background 0.3s ease 0s;
 		flex: 1 0 auto;
 		margin-bottom: 1.6875rem;
-		border-radius: 0.5rem;
+		border-radius: ${theme.space.xSmall};
 
 		background-color: ${theme.colours.background["100"]};
 
@@ -46,7 +46,7 @@ export const View = styled.button(
 		white-space: nowrap;
 
 		background-color: ${theme.colours.background["000"]};
-		border-radius: 200px;
+		border-radius: ${theme.space.xxLarge};
 		${mapFontSize("labelLarge")};
 		letter-spacing: 1px;
 		padding: ${theme.space.regular};

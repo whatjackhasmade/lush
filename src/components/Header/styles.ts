@@ -1,32 +1,38 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-export const Header = styled.header`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	padding: 1rem 0;
+export const Header = styled.header(
+	({ theme }) => css`
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: ${theme.space.regular} 0;
 
-	a {
-		color: inherit;
-		text-decoration: underline;
+		a {
+			color: inherit;
+			text-decoration: underline;
 
-		&:hover {
-			text-decoration: none;
+			&:hover {
+				text-decoration: none;
+			}
 		}
-	}
-`;
+	`
+);
 
-export const Navigation = styled.nav`
-	display: flex;
-	gap: 1rem;
-`;
+export const Navigation = styled.nav(
+	({ theme }) => css`
+		display: flex;
+		gap: ${theme.space.regular};
+	`
+);
 
 export const Title = styled.h1`
 	font-family: var(--font-handwritten);
 `;
 
-export const Actions = styled.div`
-	align-items: center;
-	display: flex;
-	gap: 1rem;
-`;
+export const Actions = styled.div(
+	({ theme }) => css`
+		align-items: center;
+		display: flex;
+		gap: ${theme.space.regular};
+	`
+);

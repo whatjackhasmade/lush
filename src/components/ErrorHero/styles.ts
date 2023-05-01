@@ -1,4 +1,4 @@
-import { focus, hover } from "lush/utils";
+import { focus } from "lush/utils";
 import styled, { css } from "styled-components";
 
 export const ErrorHero = styled.div(
