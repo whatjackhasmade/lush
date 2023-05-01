@@ -1,8 +1,8 @@
 {
-	"description": "The page you are looking for does not exist.",
-	"title": "Not found",
-	"returnToHome": "Return to home",
+	"description": "La page que vous cherchez n'existe pas.",
+	"title": "Non trouvé",
+	"returnToHome": "Retour à la page d'accueil",
 	"metadata": {
-		"title": "Not found"
+		"title": "Non trouvé"
 	}
 }

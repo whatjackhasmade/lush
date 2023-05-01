@@ -1,8 +1,8 @@
 {
-	"description": "The page you are looking for does not exist.",
-	"title": "Not found",
-	"returnToHome": "Return to home",
+	"description": "Désolé, quelque chose s'est mal passé. La page sur laquelle vous étiez n'a pas pu se charger correctement.",
+	"title": "Erreur",
+	"returnToHome": "Retour à la page d'accueil",
 	"metadata": {
-		"title": "Not found"
+		"title": "Erreur"
 	}
 }
