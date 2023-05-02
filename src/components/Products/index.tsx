@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useFilters } from "lush/hooks";
 import { useTranslation } from "next-i18next";
 import { Pagination, ToastId, Translation } from "lush/enums";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useMemo, useState } from "react";
 import { useInView } from "lush/hooks";
 import { toast } from "react-hot-toast";
 import { deepMerge } from "lush/utils";
@@ -19,6 +19,7 @@ const languageCodeFromLocale = (locale = "") =>
 	}[locale] || LanguageCodeEnum.EN);
 
 export const Products: FC = () => {
+	const [loadedMax, setLoadedMax] = useState(false);
 	const [isFetchingMore, setIsFetchingMore] = useState(false);
 	const { locale } = useRouter();
 	const { activeCategories } = useFilters();
@@ -27,8 +28,8 @@ export const Products: FC = () => {
 	const { ref: refInfiniteScroll, isInView: infiniteScrollInView } =
 		useInView();
 
-	const { data, error, fetchMore, loading } = useProductsQuery({
-		variables: {
+	const variables = useMemo(() => {
+		return {
 			channel: "uk",
 			first: Pagination.Limit,
 			language: languageCodeFromLocale(locale),
@@ -38,7 +39,16 @@ export const Products: FC = () => {
 				isVisibleInListing: true,
 				categories: activeCategories.map(({ id }) => id),
 			},
-		},
+		};
+	}, [activeCategories, locale]);
+
+	// Reset loadedMax when filters change to allow for new products to be fetched
+	useEffect(() => {
+		setLoadedMax(false);
+	}, [variables]);
+
+	const { data, error, fetchMore, loading } = useProductsQuery({
+		variables,
 	});
 
 	const isLoading = !data && loading;
@@ -51,6 +61,8 @@ export const Products: FC = () => {
 			updateQuery: (previousResult, { fetchMoreResult }) => {
 				if (!fetchMoreResult?.products) return previousResult;
 				if (!previousResult?.products) return fetchMoreResult;
+
+				if (!fetchMoreResult.products.edges.length) setLoadedMax(true);
 
 				return deepMerge(previousResult, fetchMoreResult);
 			},
@@ -88,21 +100,10 @@ export const Products: FC = () => {
 	}, [fetchMore, products, t]);
 
 	useEffect(() => {
-		if (
-			// Only fetch more products if we have a multiple of the limit
-			// otherwise we've fetched all products
-			(products?.length ?? 0) % Pagination.Limit === 0 &&
-			!isFetchingMore &&
-			infiniteScrollInView
-		) {
+		if (!loadedMax && !isFetchingMore && infiniteScrollInView) {
 			fetchMoreProducts();
 		}
-	}, [
-		fetchMoreProducts,
-		infiniteScrollInView,
-		isFetchingMore,
-		products?.length,
-	]);
+	}, [fetchMoreProducts, infiniteScrollInView, isFetchingMore, loadedMax]);
 
 	return (
 		<div id="products">
@@ -122,7 +123,7 @@ export const Products: FC = () => {
 			{!!products?.length && (
 				<>
 					<VisuallyHidden>
-						<h2>{t("products.list.title")}</h2>
+						<h2 id="products">{t("products.list.title")}</h2>
 					</VisuallyHidden>
 					<S.Products>
 						{(products?.map(({ node }) => node) ?? []).map((product) => (
