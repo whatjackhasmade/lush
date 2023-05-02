@@ -24,7 +24,8 @@ export const Products: FC = () => {
 	const { activeCategories } = useFilters();
 	const { t } = useTranslation(Translation.Common);
 
-	const { ref: refInfiniteScroll, isInView: shouldLoadMore } = useInView();
+	const { ref: refInfiniteScroll, isInView: infiniteScrollInView } =
+		useInView();
 
 	const { data, error, fetchMore, loading } = useProductsQuery({
 		variables: {
@@ -87,10 +88,21 @@ export const Products: FC = () => {
 	}, [fetchMore, products, t]);
 
 	useEffect(() => {
-		if (!isLoading && shouldLoadMore) {
+		if (
+			// Only fetch more products if we have a multiple of the limit
+			// otherwise we've fetched all products
+			(products?.length ?? 0) % Pagination.Limit === 0 &&
+			!isFetchingMore &&
+			infiniteScrollInView
+		) {
 			fetchMoreProducts();
 		}
-	}, [fetchMoreProducts, isLoading, shouldLoadMore]);
+	}, [
+		fetchMoreProducts,
+		infiniteScrollInView,
+		isFetchingMore,
+		products?.length,
+	]);
 
 	return (
 		<div id="products">
