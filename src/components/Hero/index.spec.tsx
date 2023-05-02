@@ -1,7 +1,13 @@
 import { renderWithTheme } from "../../../.jest";
 import { Hero } from ".";
+import { axe } from "jest-axe";
 
 describe("Hero", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<Hero title="foo" />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("renders no heading when title is empty string", () => {
 		const { queryByRole } = renderWithTheme(<Hero title="" />);
 		expect(queryByRole("heading")).not.toBeInTheDocument();

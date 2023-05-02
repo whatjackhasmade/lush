@@ -12,6 +12,7 @@ import {
 import { act } from "@testing-library/react";
 import { GraphQLError } from "graphql";
 import { useFilters } from "lush/hooks";
+import { axe } from "jest-axe";
 
 const user = userEvent.setup();
 
@@ -68,6 +69,15 @@ const mocks: MockedResponse[] = [
 ];
 
 describe("Filters", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(
+			<MockedProvider mocks={mocks}>
+				<Filters />
+			</MockedProvider>
+		);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("should render categories", async () => {
 		const { queryAllByTestId, getAllByTestId, getByRole, getByLabelText } =
 			renderWithTheme(

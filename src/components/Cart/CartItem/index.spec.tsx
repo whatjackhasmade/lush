@@ -2,6 +2,7 @@ import React from "react";
 import { CartItem, CartItemProps } from ".";
 import { renderWithTheme } from "../../../../.jest";
 import userEvent from "@testing-library/user-event";
+import { axe } from "jest-axe";
 
 const user = userEvent.setup();
 
@@ -61,6 +62,11 @@ const props: CartItemProps = {
 };
 
 describe("CartItem", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<CartItem {...props} />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("renders the product name and category", () => {
 		const { getByText } = renderWithTheme(<CartItem {...props} />);
 		expect(getByText("Test Product")).toBeInTheDocument();

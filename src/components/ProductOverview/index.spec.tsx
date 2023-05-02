@@ -1,6 +1,7 @@
 import { renderWithTheme } from "../../../.jest";
 import { ProductOverview } from ".";
 import { ProductFragment } from "lush/schema";
+import { axe } from "jest-axe";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const mockRenderBlocks = jest.fn((_) => null);
@@ -23,6 +24,11 @@ jest.mock("./Sidebar", () => ({
 }));
 
 describe("ProductOverview", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<ProductOverview />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("renders", () => {
 		renderWithTheme(<ProductOverview />);
 

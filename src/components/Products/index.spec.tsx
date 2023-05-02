@@ -9,6 +9,7 @@ import {
 	ProductsQueryVariables,
 } from "lush/schema";
 import { Pagination } from "lush/enums";
+import { axe } from "jest-axe";
 
 const mocks: MockedResponse[] = [
 	{
@@ -44,7 +45,7 @@ const mocks: MockedResponse[] = [
 ];
 
 describe("Products", () => {
-	// TODO
+	// TODO: Add more tests
 	it("should render correctly", () => {
 		const { container } = renderWithTheme(
 			<MockedProvider mocks={mocks}>
@@ -52,5 +53,14 @@ describe("Products", () => {
 			</MockedProvider>
 		);
 		expect(container).not.toBeEmptyDOMElement();
+	});
+
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(
+			<MockedProvider mocks={mocks}>
+				<Products />
+			</MockedProvider>
+		);
+		expect(await axe(container)).toHaveNoViolations();
 	});
 });

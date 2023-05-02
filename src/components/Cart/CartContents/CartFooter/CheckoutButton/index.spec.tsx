@@ -1,3 +1,4 @@
+import { axe } from "jest-axe";
 import { renderWithTheme } from "../../../../../../.jest";
 import { waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -13,6 +14,11 @@ Object.defineProperty(window, "alert", {
 const user = userEvent.setup();
 
 describe("CheckoutButton", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<CheckoutButton />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("renders the button with the correct text", () => {
 		const { getByRole } = renderWithTheme(<CheckoutButton />);
 		expect(getByRole("button")).toHaveTextContent("cart.checkout");

@@ -1,6 +1,7 @@
 import { renderWithTheme } from "../../../../.jest";
 import { Gallery } from ".";
 import { ProductFragment } from "lush/schema";
+import { axe } from "jest-axe";
 
 jest.mock("lush/components", () => ({
 	...jest.requireActual("lush/components"),
@@ -8,6 +9,30 @@ jest.mock("lush/components", () => ({
 }));
 
 describe("Gallery", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(
+			<Gallery
+				product={
+					{
+						media: [
+							{
+								id: "1",
+								url: "foo",
+								alt: "foo",
+							},
+							{
+								id: "2",
+								url: "bar",
+								alt: "bar",
+							},
+						],
+					} as ProductFragment
+				}
+			/>
+		);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("skips rendering when not loading and no gallery", () => {
 		const { container } = renderWithTheme(<Gallery />);
 		expect(container).toBeEmptyDOMElement();

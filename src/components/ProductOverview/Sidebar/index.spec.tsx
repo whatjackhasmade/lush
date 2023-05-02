@@ -1,6 +1,7 @@
 import { renderWithTheme } from "../../../../.jest";
 import { Sidebar } from ".";
 import userEvent from "@testing-library/user-event";
+import { axe } from "jest-axe";
 
 const user = userEvent.setup();
 
@@ -62,6 +63,11 @@ describe("Sidebar", () => {
 		const { getAllByTestId } = renderWithTheme(<Sidebar loading />);
 
 		expect(getAllByTestId("skeleton")).toHaveLength(5);
+	});
+
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<Sidebar {...props} />);
+		expect(await axe(container)).toHaveNoViolations();
 	});
 
 	it("calls quantitySet when quantity buttons are clicked", async () => {

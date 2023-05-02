@@ -1,3 +1,4 @@
+import { axe } from "jest-axe";
 import userEvent from "@testing-library/user-event";
 import { renderWithTheme } from "../../../../.jest";
 import { CartContents } from ".";
@@ -46,6 +47,11 @@ describe("CartContents", () => {
 	it("should init useOnClickOutside", () => {
 		renderWithTheme(<CartContents />);
 		expect(mockUseCart).toHaveBeenCalledTimes(1);
+	});
+
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<CartContents />);
+		expect(await axe(container)).toHaveNoViolations();
 	});
 
 	it("should call useCart pullout.close method when close button is clicked", async () => {

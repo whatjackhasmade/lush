@@ -3,6 +3,7 @@ import { renderWithTheme } from "../../../.jest";
 import { useRouter } from "next/router";
 
 import { LanguagePicker } from ".";
+import { axe } from "jest-axe";
 
 const user = userEvent.setup();
 
@@ -18,6 +19,11 @@ jest.mock("next/router", () => ({
 }));
 
 describe("LanguagePicker", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<LanguagePicker />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("should render select with locales as options", () => {
 		const { getByRole, getAllByRole } = renderWithTheme(<LanguagePicker />);
 

@@ -2,6 +2,7 @@ import { renderWithTheme } from "../../../../../.jest";
 import { AddToCart } from ".";
 import userEvent from "@testing-library/user-event";
 import { waitFor } from "@testing-library/react";
+import { axe } from "jest-axe";
 
 const user = userEvent.setup();
 
@@ -57,6 +58,11 @@ const props = {
 };
 
 describe("AddToCart", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<AddToCart {...props} />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("shows added to cart message when clicked", async () => {
 		const { getByRole } = renderWithTheme(<AddToCart {...props} />);
 

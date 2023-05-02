@@ -1,3 +1,4 @@
+import { axe } from "jest-axe";
 import { renderWithTheme } from "../../../../../.jest";
 import { CartFooter } from ".";
 
@@ -22,6 +23,11 @@ jest.mock("lush/hooks", () => ({
 }));
 
 describe("CartFooter", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<CartFooter />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("should render delivery not free", () => {
 		const { getByText } = renderWithTheme(<CartFooter />);
 

@@ -1,5 +1,6 @@
 import { renderWithTheme } from "../../../../.jest";
 import { Product } from ".";
+import { axe } from "jest-axe";
 
 describe("Product", () => {
 	const product = {
@@ -38,5 +39,10 @@ describe("Product", () => {
 	it("should render correctly", () => {
 		const { container } = renderWithTheme(<Product product={product} />);
 		expect(container).not.toBeEmptyDOMElement();
+	});
+
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<Product product={product} />);
+		expect(await axe(container)).toHaveNoViolations();
 	});
 });

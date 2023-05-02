@@ -13,7 +13,7 @@ export const Hero: FC<HeroProps> = ({ image, title }) => (
 	<S.Hero>
 		{title && (
 			<S.Contents>
-				<Title colourKey="white" family="inter" size="displayXLarge">
+				<Title as="h1" colourKey="white" family="inter" size="displayXLarge">
 					{title}
 				</Title>
 			</S.Contents>

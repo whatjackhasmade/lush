@@ -1,6 +1,7 @@
 import { renderWithTheme } from "../../../.jest";
 import { DefaultLayout, mainId } from ".";
 import { useCart } from "lush/hooks";
+import { axe } from "jest-axe";
 
 const mockRenderCart = jest.fn(() => null);
 
@@ -15,6 +16,11 @@ jest.mock("lush/hooks/useCart", () => ({
 }));
 
 describe("DefaultLayout", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<DefaultLayout>Test</DefaultLayout>);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("renders the children", () => {
 		const { getByText } = renderWithTheme(<DefaultLayout>Test</DefaultLayout>);
 		expect(getByText("Test")).toBeInTheDocument();

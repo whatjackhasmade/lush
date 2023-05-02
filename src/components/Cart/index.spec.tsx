@@ -1,3 +1,4 @@
+import { axe } from "jest-axe";
 import { renderWithTheme } from "../../../.jest";
 import { Cart } from ".";
 
@@ -23,6 +24,11 @@ jest.mock("lush/hooks", () => ({
 }));
 
 describe("Cart", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<Cart />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("should lock body scroll", () => {
 		renderWithTheme(<Cart />);
 		expect(mockUseLockBodyScroll).toHaveBeenCalled();

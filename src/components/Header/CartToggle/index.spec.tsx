@@ -3,6 +3,7 @@ import { CartToggle } from ".";
 import { renderWithTheme } from "../../../../.jest";
 
 import { useCart } from "lush/hooks/useCart";
+import { axe } from "jest-axe";
 
 const user = userEvent.setup();
 
@@ -19,6 +20,11 @@ jest.mock("lush/hooks/useCart", () => ({
 }));
 
 describe("CartToggle", () => {
+	it("confirms there are no obvious accessibility issues", async () => {
+		const { container } = renderWithTheme(<CartToggle />);
+		expect(await axe(container)).toHaveNoViolations();
+	});
+
 	it("should render cart toggle", () => {
 		const { getByRole } = renderWithTheme(<CartToggle />);
 
